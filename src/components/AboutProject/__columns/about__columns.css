@@ -1,0 +1,7 @@
+.about__columns {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  margin-bottom: 110px;
+}
