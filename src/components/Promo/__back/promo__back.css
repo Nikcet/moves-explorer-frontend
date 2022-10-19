@@ -1,0 +1,10 @@
+.promo__back {
+  width: 100%;
+  background-color: #272727;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  padding-bottom: 30px;
+}
