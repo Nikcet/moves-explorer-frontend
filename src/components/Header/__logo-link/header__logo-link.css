@@ -1,0 +1,7 @@
+.header__logo-link {
+  display: block;
+}
+
+.header__logo-link:hover {
+  opacity: .7;
+}
