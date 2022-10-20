@@ -1,0 +1,13 @@
+.aboutme__link {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  text-decoration: none;
+  color: #fff;
+  margin-top: 99px;
+}
+
+.aboutme__link:hover{
+  opacity: .7;
+}
