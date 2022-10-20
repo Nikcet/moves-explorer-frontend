@@ -1,0 +1,20 @@
+.techs {
+  display: block;
+  width: 100%;
+  padding: 100px 70px;
+  box-sizing: border-box;
+  color: #fff;
+  background-color: #272727;
+}
+
+@import url(./__content/techs__content.css);
+@import url(./__description/techs__description.css);
+@import url(./__header/techs__header.css);
+@import url(./__heading/techs__heading.css);
+@import url(./__line/techs__line.css);
+@import url(./__list/techs__list.css);
+@import url(./__main/techs__main.css);
+@import url(./__seven-techs/techs__seven-techs.css);
+@import url(./__skills/techs__skills.css);
+@import url(./__technology/techs__technology.css);
+@import url(./__text/techs__text.css);
