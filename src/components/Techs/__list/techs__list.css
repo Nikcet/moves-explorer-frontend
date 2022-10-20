@@ -1,0 +1,6 @@
+.techs__list {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
