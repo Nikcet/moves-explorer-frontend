@@ -22,7 +22,7 @@ def change_dir(dir_name):
 
 
 def read_file(indexed_file):
-    with open(f'{os.path.dirname(__file__)}\\{indexed_file}') as file:
+    with open(f'{os.path.dirname(__file__)}\\{indexed_file}', encoding='utf-8') as file:
         content = file.read()
         soup = BeautifulSoup(content, 'lxml')
     return soup
@@ -31,7 +31,7 @@ def read_file(indexed_file):
 def create_file(name):
     print('Создает файл: ' + name)
     if not os.path.exists(f'{name}.css'):
-        with open(f'{name}.css', 'a') as file:
+        with open(f'{name}.css', 'a', encoding= 'utf-8') as file:
             file.write(f'.{name} ' + '{}')
     else:
         print('Такой файл уже существует.')
@@ -42,6 +42,7 @@ def parse_file(ind_file):
     classes = set()
     for el in elements:
         if 'classname' in str(el):
+            # Может парсить только то, что находится между ""
             found = re.findall(r'"(.*?)"', str(el))
             classes.update(set(found))
     return classes
