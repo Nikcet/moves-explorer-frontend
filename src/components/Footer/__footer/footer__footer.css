@@ -1,0 +1,7 @@
+.footer__footer {
+  border-top: 1px solid #424242;
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+  padding: 20px 0;
+}
