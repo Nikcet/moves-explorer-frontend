@@ -1,0 +1,10 @@
+.portfolio {
+  width: 100%;
+}
+
+@import url(./__main/portfolio__main.css);
+@import url(./__header/portfolio__header.css);
+@import url(./__link-arrow/protfolio__link-arrow.css);
+@import url(./__link-block/portfolio__link-block.css);
+@import url(./__link/portfolio__link.css);
+@import url(./__links/portfolio__links.css);
