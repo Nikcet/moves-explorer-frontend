@@ -9,7 +9,7 @@ function Search(props) {
         <div className="search__input">
           <label htmlFor='search-input' className="search__icon">
             <img src={icon} alt="Знакчек поиска" className='search__icon-image' />
-            <input type='search' name='search-input' id='search-input' className="search__input-field" placeholder='Фильм' />
+            <input type='search' name='search-input' id='search-input' className="search__input-field" placeholder='Фильм' required/>
           </label>
           <input type='submit' value='Найти' className="search__input-submit" />
         </div>

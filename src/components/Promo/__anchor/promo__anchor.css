@@ -18,3 +18,9 @@
 .promo__anchor:hover {
   opacity: .7;
 }
+
+@media screen and (max-width: 600px) {
+  .promo__anchor {
+    font-size: 10px;
+  }
+}
