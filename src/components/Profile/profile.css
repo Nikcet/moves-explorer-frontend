@@ -1,0 +1,39 @@
+.profile {
+  width: 100%;
+  min-height: calc(100vh - 74px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 74px 0 70px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width:900px) {
+  .profile {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width:600px) {
+  .profile {
+    padding: 70px 30px 40px;
+  }
+}
+
+@import url(./__greet/profile__greet.css);
+@import url(./__buttons/profile__buttons.css);
+@import url(./__content/profile__content.css);
+@import url(./__edit-btn/profile__edit-btn.css);
+@import url(./__email-input/profile__email-input.css);
+@import url(./__email-label/profile__email-label.css);
+@import url(./__email/profile__email.css);
+@import url(./__btn/profile__btn.css);
+@import url(./__edit-btn/profile__edit-btn.css);
+@import url(./__exit-btn/profile__exit-btn.css);
+@import url(./__form/profile__form.css);
+@import url(./__row/profile__row.css);
+@import url(./__name-input/profile__name-input.css);
+@import url(./__name-label/profile__name-label.css);
+@import url(./__name/profile__name.css);
+@import url(./__label/profile__label.css);
+@import url(./__input/profile__input.css);
