@@ -1,0 +1,9 @@
+.search__icon-image{
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .search__icon-image {
+    display: none;
+  }
+}
