@@ -13,11 +13,6 @@ import { Route, Routes, Redirect, useHistory } from 'react-router-dom';
 function App() {
 
   const [isLoggined, setIsLoggined] = React.useState(true);
-  // console.log(isLoggined);
-
-  React.useEffect(() => {
-    setIsLoggined(true);
-  }, [isLoggined]);
 
   return (
     <div className="App">
