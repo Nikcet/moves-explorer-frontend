@@ -8,11 +8,11 @@ import Profile from '../Profile/Profile';
 import ErrorPage from '../ErrorPage/ErrorPage';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
-import { Route, Routes, Redirect, useHistory } from 'react-router-dom';
+import { Route, Routes, Redirect, useNavigation } from 'react-router-dom';
 
 function App() {
 
-  const [isLoggined, setIsLoggined] = React.useState(true);
+  const [isLoggined, setIsLoggined] = React.useState(false);
 
   return (
     <div className="App">
