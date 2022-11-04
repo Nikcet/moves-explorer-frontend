@@ -1,0 +1,16 @@
+.error__history-back {
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  color: #4285F4;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.error__history-back:hover {
+  opacity: .7;
+  cursor: pointer;
+}
