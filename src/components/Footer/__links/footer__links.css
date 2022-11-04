@@ -3,3 +3,11 @@
   gap: 20px;
   align-items: center;
 }
+
+@media screen and (max-width: 600px) {
+  .footer__links {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+}

@@ -5,3 +5,11 @@
   color: #fff;
   padding: 20px 0;
 }
+
+@media screen and (max-width: 600px) {
+  .footer__footer {
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 30px 0 10px;
+  }
+}
