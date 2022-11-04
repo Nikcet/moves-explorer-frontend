@@ -1,7 +1,7 @@
 import React from 'react';
 import accountImage from '../../images/icon__COLOR_icon-main.svg'
-import logo from '../../images/logo.png';
-import { Link } from 'react-router-dom'
+import logo from '../../images/logo.svg';
+import { Link } from 'react-router-dom';
 
 function Navigation(props) {
   // console.log(props.isLoggined);
@@ -15,10 +15,12 @@ function Navigation(props) {
         <Link to='/saved-movies' className="navigation__link">Сохранённые фильмы</Link>
       </nav>
       <div className="navigation__account-vidget navigation__account-vidget_mobile">
-        <p className="navigation__account-name">Аккаунт</p>
-        <div className="navigation__account-circle-icon">
-          <img src={accountImage} alt='Иконка' className="navigation__account-icon" />
-        </div>
+        <Link to='/profile' className="navigation__account-vidget">
+          <p className="navigation__account-name">Аккаунт</p>
+          <div className="navigation__account-circle-icon">
+            <img src={accountImage} alt='Иконка' className="navigation__account-icon" />
+          </div>
+        </Link>
       </div>
 
       <div className="navigation__mobile">
