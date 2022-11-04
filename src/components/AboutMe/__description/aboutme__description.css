@@ -1,4 +1,13 @@
 .aboutme__description {
   max-width: 600px;
-  width: 100%;
+  min-width: 292px;
+  width: calc(100% - 305px);
+}
+
+@media screen and (max-width: 900px) {}
+
+@media screen and (max-width: 700px) {
+  .aboutme__description {
+    width: 100%;
+  }
 }

@@ -4,3 +4,15 @@
   box-sizing: border-box;
   color: #fff;
 }
+
+@media screen and (max-width: 900px) {
+  .aboutme__main {
+    padding: 50px 90px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .aboutme__main {
+    padding: 70px 14px;
+  }
+}

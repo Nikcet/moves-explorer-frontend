@@ -1,5 +1,21 @@
 .aboutme__avatar {
-  max-width: 270px;
-  max-height: 327px;
-  width: 100%;
+  display: flex;
+  width: 270px;
+  height: 327px;
+}
+
+@media screen and (max-width: 900px) {
+  .aboutme__avatar {
+    width: 255px;
+    height: 307px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .aboutme__avatar {
+    width: 100%;
+    margin-bottom: 40px;
+    max-width: fit-content;
+    height: 352px;
+  }
 }
