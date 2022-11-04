@@ -3,3 +3,8 @@
   gap: 7px;
   align-items: center;
 }
+
+.navigation__account-vidget:hover {
+  opacity: .7;
+  cursor: pointer;
+}

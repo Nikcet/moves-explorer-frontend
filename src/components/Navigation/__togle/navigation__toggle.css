@@ -43,3 +43,13 @@
   right: 30px;
   position: fixed;
 }
+
+@media screen and (max-width: 600px) {
+  .navigation__toggle {
+    right: 15px;
+  }
+
+  .navigation__toggle:checked{
+    right: 15px;
+  }
+}
