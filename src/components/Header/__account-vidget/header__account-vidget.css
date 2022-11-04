@@ -1,0 +1,5 @@
+.header__account-vidget {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
