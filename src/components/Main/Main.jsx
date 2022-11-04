@@ -4,7 +4,6 @@ import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Protfolio/Portfolio';
-import Footer from '../Footer/Footer';
 
 function Main(props) {
   return (
@@ -14,7 +13,6 @@ function Main(props) {
       <Techs />
       <AboutMe />
       <Portfolio />
-      <Footer />
     </main>
   );
 }
