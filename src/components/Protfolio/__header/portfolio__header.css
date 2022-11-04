@@ -5,3 +5,18 @@
   line-height: 1.11;
   margin-bottom: 30px;
 }
+
+@media screen and (max-width: 900px) {
+  .portfolio__header {
+    margin-bottom: 50px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .portfolio__header {
+    margin-bottom: 40px;
+    font-size: 14px;
+    line-height: 1.43;
+    color: #A0A0A0;
+  }
+}

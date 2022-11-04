@@ -4,3 +4,15 @@
   width: 100%;
   color: #fff;
 }
+
+@media screen and (max-width: 900px) {
+  .portfolio__main {
+    padding: 0 50px 90px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .portfolio__main {
+    padding: 0 14px 70px;
+  }
+}
