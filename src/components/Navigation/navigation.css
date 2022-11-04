@@ -1,0 +1,22 @@
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 16px;
+}
+
+@import url(./__link/navigation__link.css);
+@import url(./__mobile/navigation__mobile.css);
+@import url(./__togle/navigation__toggle.css);
+@import url(./__btn/navigation__btn.css);
+@import url(./__span/navigation__span.css);
+@import url(./__box/navigation__box.css);
+@import url(./__links/navigation__links.css);
+@import url(./__logo-link/navigation__logo-link.css);
+@import url(./__logo/navigation__logo.css);
+@import url(./__account-circle-icon/navigation__account-circle-icon.css);
+@import url(./__account-name/navigation__account-name.css);
+@import url(./__account-icon/navigation__account-icon.css);
+@import url(./__account-vidget/navigation__account-vidget.css);
+@import url(./__account-vidget/_mobile/navigation__account-vidget_mobile.css);
+@import url(./__list-links/navigation__list-links.css);

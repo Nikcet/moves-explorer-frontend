@@ -1,0 +1,45 @@
+.navigation__toggle {
+  opacity: 0;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 8px;
+  left: -3px;
+  cursor: pointer;
+  z-index: 4;
+}
+
+
+.navigation__toggle:checked~.navigation__btn>.navigation__span {
+  transform: rotate(45deg);
+  position: fixed;
+}
+
+.navigation__toggle:checked~.navigation__btn>.navigation__span::before {
+  top: 0;
+  transform: rotate(0);
+  position: fixed;
+}
+
+.navigation__toggle:checked~.navigation__btn>.navigation__span::after {
+  top: 0;
+  transform: rotate(90deg);
+  position: fixed;
+}
+
+.navigation__toggle:checked~.navigation__box {
+  right: 0;
+  position: fixed;
+  transition: .25s;
+  -webkit-transition: .25s;
+  -moz-transition: .25s;
+  -ms-transition: .25s;
+  -o-transition: .25s;
+}
+
+.navigation__toggle:checked {
+  left: auto;
+  top: 22px;
+  right: 30px;
+  position: fixed;
+}

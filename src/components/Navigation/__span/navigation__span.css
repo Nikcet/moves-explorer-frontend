@@ -1,0 +1,20 @@
+.navigation__span,
+.navigation__span::before,
+.navigation__span::after {
+  display: block;
+  position: absolute;
+  width: 28px;
+  height: 3px;
+  background-color: #fff;
+  transition-duration: .25s;
+}
+
+.navigation__span::before {
+  content: '';
+  top: -7px;
+}
+
+.navigation__span::after {
+  content: '';
+  top: 7px;
+}
