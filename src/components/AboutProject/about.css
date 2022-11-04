@@ -3,6 +3,19 @@
   padding: 110px 70px;
   box-sizing: border-box;
   color: #fff;
+  font-size: 14px;
+}
+
+@media screen and (max-width: 900px) {
+  .about {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .about {
+    padding: 70px 18px;
+  }
 }
 
 @import url(./__content/about__content.css);

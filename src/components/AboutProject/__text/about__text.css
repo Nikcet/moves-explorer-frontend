@@ -1,5 +1,16 @@
 .about__text {
-  font-size: 14px;
   font-weight: 400;
   line-height: 1.43;
+}
+
+@media screen and (max-width: 900px) {
+  .about__text{
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .about__text {
+    font-size: 11px;
+  }
 }

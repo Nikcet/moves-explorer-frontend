@@ -5,3 +5,9 @@
   letter-spacing: -0.04em;
   margin: 0;
 }
+
+@media screen and (max-width: 600px) {
+  .about__header {
+    font-size: 18px;
+  }
+}
