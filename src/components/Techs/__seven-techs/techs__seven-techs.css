@@ -5,3 +5,17 @@
   letter-spacing: -0.04em;
   margin-bottom: 26px;
 }
+
+@media screen and (max-width: 900px) {
+  .techs__seven-techs {
+    margin-bottom: 22px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .techs__seven-techs {
+    font-size: 30px;
+    line-height: 36px;
+    margin-bottom: 24px;
+  }
+}

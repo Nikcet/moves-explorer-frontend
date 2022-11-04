@@ -1,6 +1,21 @@
 .techs__list {
+  padding: 0;
+  margin: 0;
   list-style-type: none;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(84px, 90px));
   gap: 10px;
+  justify-content: center;
+}
+
+@media screen and (max-width: 900px) {
+  .techs__list {
+    grid-template-columns: repeat(auto-fit, 84px);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .techs__list {
+    padding: 0 35px;
+  }
 }

@@ -1,5 +1,5 @@
 .techs__technology {
-  width: 90px;
+  max-width: 90px;
   padding: 21px 0;
   background-color: #303030;
   border-radius: 10px;
@@ -15,4 +15,12 @@
 
 .techs__technology:hover {
   opacity: .8;
+}
+
+@media screen and (max-width: 900px) {
+  .techs__technology{
+    max-width: 84px;
+    font-size: 12px;
+    line-height: 15px;
+  }
 }

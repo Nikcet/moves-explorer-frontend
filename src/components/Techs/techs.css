@@ -7,6 +7,18 @@
   background-color: #272727;
 }
 
+@media screen and (max-width: 900px) {
+  .techs {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .techs {
+    padding: 70px 18px;
+  }
+}
+
 @import url(./__content/techs__content.css);
 @import url(./__description/techs__description.css);
 @import url(./__header/techs__header.css);
