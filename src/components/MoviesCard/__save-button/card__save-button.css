@@ -1,0 +1,21 @@
+.card__save-button {
+  width: 72px;
+  color: #fff;
+  padding: 6px 7px;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 0.9;
+  background-color: #313131;
+  border: 0;
+  outline: 0;
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+}
+
+.card__save-button:hover{
+  opacity: .9;
+  cursor: pointer;
+}
