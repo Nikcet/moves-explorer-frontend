@@ -10,8 +10,8 @@ function Footer(props) {
         <div className="footer__footer">
           <p className="footer__copyright">&copy; 2022</p>
           <div className="footer__links">
-            <a href="#/" className="footer__link">Яндекс.Практикум</a>
-            <a href="#/" className="footer__link">GitHub</a>
+            <a href="https://practicum.yandex.ru/" className="footer__link">Яндекс.Практикум</a>
+            <a href="https://github.com/Nikcet" target='_blank' rel='noreferrer' className="footer__link">GitHub</a>
           </div>
         </div>
       </div>
