@@ -5,16 +5,17 @@ import icon from '../../images/icon__COLOR_invisible.svg';
 
 function MoviesCard(props) {
   const isSave = false;
+  const altText = 'Какой-то заменяемый текст'
 
   return (
-    <div className="card">
-      <img src={imageSrc} alt="" className="card__image" />
+    <li className="card">
+      <img src={imageSrc} alt={altText} className="card__image" />
       <div className="card__save-widget">
         {!isSave ?
-          <input type="button" value="Сохранить" className='card__save-button' />
+          <button type="submit" className='card__save-button'>Сохранить</button>
           :
           <div className="card__save-icon-circle">
-            <img src={icon} alt="" className="card__save-icon" />
+            <img src={icon} alt="Иконка: сохранено" className="card__save-icon" />
           </div>
         }
       </div>
@@ -24,7 +25,7 @@ function MoviesCard(props) {
           <p className="card__time">1ч 17м</p>
         </div>
       </div>
-    </div>
+    </li>
   );
 }
 
