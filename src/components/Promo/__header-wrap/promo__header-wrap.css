@@ -1,6 +1,18 @@
 .promo__header-wrap {
-  text-align: center;
-  margin: auto;
-  padding: 160px 235px;
-  box-sizing: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 160px;
+}
+
+@media screen and (max-width: 900px) {
+  .promo__header-wrap {
+    padding-top: 350px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .promo__header-wrap {
+    padding-top: 220px;
+  }
 }

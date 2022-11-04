@@ -3,6 +3,18 @@
   box-sizing: inherit;
 }
 
+@media screen and (max-width: 900px) {
+  .promo {
+    padding: 0 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .promo {
+    padding: 0 14px;
+  }
+}
+
 @import url(./__back/promo__back.css);
 @import url(./__header-wrap/promo__header-wrap.css);
 @import url(./__header/promo__header.css);
