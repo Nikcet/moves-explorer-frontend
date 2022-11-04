@@ -33,3 +33,9 @@
 @import url(./components/Profile/profile.css);
 
 @import url(./components/ErrorPage/error.css);
+
+@import url(./components/ErrorValid/error-input.css);
+
+@import url(./components/Register/register.css);
+
+@import url(./components/Login/login.css);
