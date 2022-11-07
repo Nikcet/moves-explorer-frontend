@@ -22,7 +22,7 @@ function Login(props) {
         <div className="register__buttons">
           <button type="submit" className='register__submit-btn'>Войти</button>
           <p className="register__register">
-            Еще не зарегистрированы? <Link to='/signin' className='register__login-link'>Регистрация</Link>
+            Еще не зарегистрированы? <Link to='/signup' className='register__login-link'>Регистрация</Link>
           </p>
         </div>
       </div>

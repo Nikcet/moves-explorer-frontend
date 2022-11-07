@@ -12,22 +12,43 @@ import { Route, Routes, Redirect, useNavigation } from 'react-router-dom';
 
 function App() {
 
-  const [isLoggined, setIsLoggined] = React.useState(false);
+  const [isLoggined, setIsLoggined] = React.useState(true);
 
   return (
     <div className="App">
       <div className="page">
-        <Header isLoggined={isLoggined} />
         <Routes>
-          <Route path='/' element={<Main />} />
-          <Route path='/movies' element={<Movies />} />
-          <Route path='/saved-movies' element={<SavedMovies />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/' element={
+            <>
+              <Header isLoggined={isLoggined} />
+              <Main />
+              <Footer />
+            </>
+          } />
+          <Route path='/movies' element={
+            <>
+              <Header isLoggined={isLoggined} />
+              <Movies />
+              <Footer />
+            </>
+          } />
+          <Route path='/saved-movies' element={
+            <>
+              <Header isLoggined={isLoggined} />
+              <SavedMovies />
+              <Footer />
+            </>
+          } />
+          <Route path='/profile' element={
+            <>
+              <Header isLoggined={isLoggined} />
+              <Profile />
+            </>
+          } />
           <Route path='/signin' element={<Login />} />
           <Route path='/signup' element={<Register />} />
-          <Route path='*' element={<ErrorPage />}/>
+          <Route path='*' element={<ErrorPage />} />
         </Routes>
-        <Footer />
       </div>
     </div>
   );

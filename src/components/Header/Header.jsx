@@ -4,7 +4,6 @@ import logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 
 function Header(props) {
-  console.log(props.isLoggined);
   return (
     <header className="header">
       {!props.isLoggined && <Link to='/' className='header__logo-link'>

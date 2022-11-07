@@ -4,6 +4,8 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
 function Movies(props) {
+  const [isLoggined, setIsLoggined] = React.useState(false);
+
   return (
     <section className="movies">
       <Search />

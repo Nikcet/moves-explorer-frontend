@@ -12,7 +12,7 @@ function MoviesCard(props) {
       <img src={imageSrc} alt={altText} className="card__image" />
       <div className="card__save-widget">
         {!isSave ?
-          <button type="submit" className='card__save-button'>Сохранить</button>
+          <button type="button" className='card__save-button'>Сохранить</button>
           :
           <div className="card__save-icon-circle">
             <img src={icon} alt="Иконка: сохранено" className="card__save-icon" />
