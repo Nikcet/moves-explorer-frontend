@@ -1,0 +1,7 @@
+.navigation__logo-link {
+  display: block;
+}
+
+.navigation__logo-link:hover {
+  opacity: .7;
+}

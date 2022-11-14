@@ -1,0 +1,4 @@
+.header__account-links {
+  display: flex;
+  gap: 16px;
+}

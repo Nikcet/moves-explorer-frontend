@@ -1,0 +1,13 @@
+.header__account-circle-icon{
+  width: 26px;
+  height: 26px;
+  background-color: #313131;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  -ms-border-radius: 100%;
+  -o-border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

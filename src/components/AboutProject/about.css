@@ -1,0 +1,36 @@
+.about {
+  width: 100%;
+  padding: 110px 70px;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 14px;
+}
+
+@media screen and (max-width: 900px) {
+  .about {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .about {
+    padding: 70px 18px;
+  }
+}
+
+@import url(./__content/about__content.css);
+@import url(./__column/about__column.css);
+@import url(./__columns/about__columns.css);
+@import url(./__heading/about__heading.css);
+@import url(./__header/about__header.css);
+@import url(./__line/about__line.css);
+@import url(./__duration/about__duration.css);
+@import url(./__main/about__main.css);
+@import url(./__text/about__text.css);
+@import url(./__title/about__title.css);
+@import url(./__week-one/about__week-one.css);
+@import url(./__week-one-title/about__week-one-title.css);
+@import url(./__week-one-subtitle/about__week-one-subtitle.css);
+@import url(./__week-four/about__week-four.css);
+@import url(./__week-four-title/about__week-four-title.css);
+@import url(./__week-four-subtitle/about__week-four-subtitle.css);

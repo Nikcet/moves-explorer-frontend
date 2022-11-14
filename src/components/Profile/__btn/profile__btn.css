@@ -1,0 +1,14 @@
+.profile__btn {
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.profile__btn:hover {
+  cursor: pointer;
+  opacity: .8;
+}

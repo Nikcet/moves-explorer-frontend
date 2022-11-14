@@ -1,0 +1,6 @@
+.more {
+  padding: 50px 0 80px;
+  text-align: center
+}
+
+@import url(./__button/more__button.css);

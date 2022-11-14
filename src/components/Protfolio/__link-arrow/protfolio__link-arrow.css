@@ -1,0 +1,15 @@
+.protfolio__link-arrow {
+  width: 29px;
+}
+
+@media screen and (max-width: 900px) {
+  .protfolio__link-arrow {
+    width: 27px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .protfolio__link-arrow {
+    width: 18px;
+  }
+}

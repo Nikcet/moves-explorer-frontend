@@ -1,0 +1,11 @@
+.card__duration {
+  background-color: #2f2f2f;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

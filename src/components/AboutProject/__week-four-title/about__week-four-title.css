@@ -1,0 +1,14 @@
+.about__week-four-title {
+  background-color: #303030;
+  color: #fff;
+  padding: 9px 0;
+  box-sizing: border-box;
+  margin-bottom: 14px;
+}
+
+
+@media screen and (max-width: 600px) {
+  .about__week-four-title {
+    font-size: 11px;
+  }
+}

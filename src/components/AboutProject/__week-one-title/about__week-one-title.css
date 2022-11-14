@@ -1,0 +1,13 @@
+.about__week-one-title {
+  color: #000;
+  background-color: #3DDC84;
+  padding: 9px 0;
+  box-sizing: border-box;
+  margin-bottom: 14px;
+}
+
+@media screen and (max-width: 600px) {
+  .about__week-one-title {
+    font-size: 11px;
+  }
+}

@@ -1,0 +1,18 @@
+.register {
+  color: #fff;
+  width: 100%;
+  min-height: 100vh;
+}
+
+@import url(./__buttons/register__buttons.css);
+@import url(./__content/register__content.css);
+@import url(./__error/form__error.css);
+@import url(./__form/register__form.css);
+@import url(./__greet/register__greet.css);
+@import url(./__greeting/register__greeting.css);
+@import url(./__input/register__input.css);
+@import url(./__label/register__label.css);
+@import url(./__login-link/register__login-link.css);
+@import url(./__login/register__login.css);
+@import url(./__logo/register__logo.css);
+@import url(./__submit-btn/register__submit-btn.css);

@@ -1,0 +1,12 @@
+.footer {
+  width: 100%;
+}
+
+@import url(./__main/footer__main.css);
+@import url(./__copyright/footer__copyright.css);
+@import url(./__footer/footer__footer.css);
+@import url(./__link/footer__link.css);
+@import url(./__links/footer__links.css);
+@import url(./__main/footer__main.css);
+@import url(./__text/footer__text.css);
+@import url(./__whose/footer__whose.css);

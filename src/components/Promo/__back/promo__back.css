@@ -1,0 +1,25 @@
+.promo__back {
+  width: 100%;
+  min-height: 493px;
+  background-color: #272727;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 900px) {
+  .promo__back {
+    min-height: 834px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .promo__back {
+    min-height: 586px;
+  }
+}

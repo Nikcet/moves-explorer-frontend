@@ -1,0 +1,23 @@
+.aboutme__student-profession {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.11;
+  width: 100%;
+  margin: 0;
+  margin-bottom: 26px;
+}
+
+@media screen and (max-width: 900px) {
+  .aboutme__student-profession {
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .aboutme__student-profession {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+}

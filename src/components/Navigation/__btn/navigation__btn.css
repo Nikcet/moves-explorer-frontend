@@ -1,0 +1,11 @@
+.navigation__btn {
+  display: block;
+  position: absolute;
+  z-index: 5;
+  top: 20px;
+  right: 30px;
+}
+
+.navigation__btn:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,16 @@
+.search__checkbox {
+  opacity: 0;
+}
+
+.search__checkbox:checked + .search__switcher{
+  background-color: #2BE080;
+}
+
+.search__checkbox:checked + .search__switcher::before {
+  background-color: #fff;
+  transform: translateX(16px);
+  -webkit-transform: translateX(16px);
+  -moz-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  -o-transform: translateX(16px);
+}

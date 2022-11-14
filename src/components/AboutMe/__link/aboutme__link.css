@@ -1,0 +1,25 @@
+.aboutme__link {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  text-decoration: none;
+  color: #fff;
+  margin-top: 100px;
+}
+
+.aboutme__link:hover{
+  opacity: .7;
+}
+
+@media screen and (max-width: 900px) {
+  .aboutme__link {
+    margin-top: 87px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .aboutme__link {
+    margin-top: 40px;
+  }
+}

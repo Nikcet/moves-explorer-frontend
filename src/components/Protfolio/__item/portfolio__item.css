@@ -1,0 +1,8 @@
+.portfolio__item {
+  display: block;
+}
+
+.portfolio__item:nth-of-type(2){
+  border-top: 1px solid #424242;
+  border-bottom: 1px solid #424242;
+}

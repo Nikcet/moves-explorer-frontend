@@ -1,0 +1,30 @@
+.search {
+  padding: 70px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 900px) {
+  .search {
+    padding: 80px 30px 110px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .search {
+    padding: 80px 10px 110px;
+  }
+}
+
+
+@import url(./__checkbox/search__checkbox.css);
+@import url(./__form/search__form.css);
+@import url(./__icon/search__icon.css);
+@import url(./__input-field/search__input-field.css);
+@import url(./__input-submit/search__input-submit.css);
+@import url(./__input/search__input.css);
+@import url(./__line/search__line.css);
+@import url(./__shortmovies-text/search__shortmovies-text.css);
+@import url(./__shortmovies/search__shortmovies.css);
+@import url(./__switch/search__switch.css);
+@import url(./__switcher/search__switcher.css);
+@import url(./__icon-image/seacr__icon-image.css);

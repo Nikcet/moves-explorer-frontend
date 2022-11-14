@@ -1,0 +1,19 @@
+.search__input-field {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  color: #fff;
+  width: 100%;
+  margin-right: 30px;
+}
+
+.search__input-field::placeholder {
+  color: #8B8B8B;
+  font-size: 18px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.search__input-field:focus {
+  border-bottom: 1px solid #fff;
+}

@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  width: 100%;
+  min-height: 74px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 70px;
+  box-sizing: inherit;
+}
+
+@media screen and (max-width: 900px) {
+  .header {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .header {
+    padding: 0 14px;
+  }
+}
+
+@import url(./__logo/header__logo.css);
+@import url(./__logo-link/header__logo-link.css);
+@import url(./__button/header__button.css);
+@import url(./__button-reg/header__button-reg.css);
+@import url(./__button-login/header__button-login.css);
+@import url(./__account-icon/header__account-icon.css);
+@import url(./__account-name/header__account-name.css);
+@import url(./__account-vidget/header__account-vidget.css);
+@import url(./__account-circle-icon/header__account-circle-icon.css);

@@ -1,0 +1,10 @@
+.about__week-four-subtitle {
+  color: #8B8B8B;
+}
+
+
+@media screen and (max-width: 600px) {
+  .about__week-four-subtitle {
+    font-size: 11px;
+  }
+}

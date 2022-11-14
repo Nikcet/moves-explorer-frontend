@@ -1,0 +1,12 @@
+.register__greet {
+  margin-bottom: 40px;
+  max-width: 396px;
+  width: 100%;
+}
+
+@media screen and (max-width:600px) {
+  .register__greet {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+}

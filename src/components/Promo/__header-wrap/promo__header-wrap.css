@@ -1,0 +1,18 @@
+.promo__header-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 160px;
+}
+
+@media screen and (max-width: 900px) {
+  .promo__header-wrap {
+    padding-top: 350px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .promo__header-wrap {
+    padding-top: 220px;
+  }
+}

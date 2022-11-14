@@ -1,0 +1,17 @@
+.aboutme {
+  width: 100%;
+}
+
+
+@import url(./__avatar/aboutme__avatar.css);
+@import url(./__content/aboutme__content.css);
+@import url(./__description/aboutme__description.css);
+@import url(./__header/aboutme__header.css);
+@import url(./__heading/aboutme__heading.css);
+@import url(./__image/aboutme__image.css);
+@import url(./__line/aboutme__line.css);
+@import url(./__link/aboutme__link.css);
+@import url(./__main/aboutme__main.css);
+@import url(./__student-description/aboutme__student-description.css);
+@import url(./__student-name/aboutme__student-name.css);
+@import url(./__student-profession/aboutme__student-profession.css);

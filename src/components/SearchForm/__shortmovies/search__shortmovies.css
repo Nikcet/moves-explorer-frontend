@@ -1,0 +1,13 @@
+.search__shortmovies {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 30px;
+}
+
+@media screen and (max-width: 600px) {
+  .search__shortmovies {
+    margin: 45px auto;
+  }
+}

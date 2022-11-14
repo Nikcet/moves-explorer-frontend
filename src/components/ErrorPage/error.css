@@ -1,0 +1,13 @@
+.error {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 73px);
+  padding-bottom: 60px;
+  box-sizing: border-box;
+}
+
+@import url(./__content/error__content.css);
+@import url(./__history-back/error__history-back.css);
+@import url(./__subtitle/error__subtitle.css);
+@import url(./__title/error__title.css);

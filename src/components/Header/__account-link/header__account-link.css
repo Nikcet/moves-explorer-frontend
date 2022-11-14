@@ -1,0 +1,9 @@
+.header__account-link {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+}
+
+.header__account-link:hover {
+  opacity: .7;
+}
