@@ -1,6 +1,9 @@
 import React from 'react';
 
 function Profile(props) {
+
+  
+  
   return (
     <section className="profile">
       <div className="profile__content">
@@ -17,7 +20,7 @@ function Profile(props) {
 
           <div className="profile__buttons">
             <input type="button" value="Редактировать" className="profile__btn profile__edit-btn" />
-            <input type="button" value="Выйти из аккаунта" className="profile__btn profile__exit-btn" />
+            <input type="button" value="Выйти из аккаунта" className="profile__btn profile__exit-btn" onClick={props.signOut()} />
           </div>
         </form>
       </div>
