@@ -29,6 +29,7 @@ export const authorization = (email, password) => {
     )
         .then(res => onResponse(res))
         .then(data => {
+            // document.cookie = `token=${data.token}, max-age=3600`;
             localStorage.setItem('token', data.token);
         })
 }
@@ -42,6 +43,21 @@ export const login = (jwtToken) => {
             headers: {
                 "Content-Type": "application/json",
                 authorization: `Bearer ${jwtToken}`,
+                "Access-Control-Allow-Credentials": true
+            }
+        }
+    )
+        .then(res => onResponse(res))
+}
+
+export const logout = () => {
+    return fetch(
+        `${mainApiUrl}/users/me`,
+        {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
                 "Access-Control-Allow-Credentials": true
             }
         }
