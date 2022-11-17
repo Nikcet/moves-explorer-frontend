@@ -21,73 +21,58 @@ class Api {
 
   }
 
-  // // Получает информацию о пользователе
-  // getUserInfo() {
-  //     return fetch(`${this._url}/users/me`, {
-  //         headers: this._headers,
-  //         credentials: 'include',
-  //     })
-  //         .then(this.onResponse)
-  // }
+  // Отправляет карточку с фильмом
+  postMovie({ country, director, duration, year, description, image, trailerLink, thumbnail, nameRU, nameEN, movieId }) {
+    return fetch(`${this._url}/saved-movies`, {
+      method: 'POST',
+      headers: this._headers,
+      credentials: this._credentials,
+      body: JSON.stringify({
+        country,
+        director,
+        duration,
+        year,
+        description,
+        image,
+        trailerLink,
+        thumbnail,
+        nameRU,
+        nameEN,
+        movieId,
+      }),
+    })
+      .then(this.onResponse)
+  }
 
-  // // Отправляет информацию о пользователе на сервер
-  // sendProfileDatasToServer(name, about) {
-  //     return fetch(`${this._url}/users/me`, {
-  //         method: 'PATCH',
-  //         headers: this._headers,
-  //         credentials: 'include',
-  //         body: JSON.stringify({
-  //             name,
-  //             about,
-  //         })
-  //     })
-  //         .then(this.onResponse)
-  // }
+  deleteMovie(movieId) {
+    return fetch(`${this._url}/movies/${movieId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+      credentials: this._credentials,
+    })
+      .then(this.onResponse)
+  }
 
-  // // Отправляет аватар пользователя на сервер
-  // sendAvatarToServer(avatar) {
-  //     return fetch(`${this._url}/users/me/avatar`, {
-  //         method: 'PATCH',
-  //         headers: this._headers,
-  //         credentials: 'include',
-  //         body: JSON.stringify({ avatar }),
-  //     })
-  //         .then(this.onResponse)
-  // }
+  // Получает информацию о пользователе
+  getUser() {
+    return fetch(`${this._url}/users/me`, {
+      headers: this._headers,
+      credentials: this._credentials,
+    })
+      .then(this.onResponse)
+  }
 
-  // // Отправляет карточку на сервер
-  // postCard({ name, link }) {
-  //     return fetch(`${this._url}/cards`, {
-  //         method: 'POST',
-  //         headers: this._headers,
-  //         credentials: 'include',
-  //         body: JSON.stringify({
-  //             name,
-  //             link,
-  //         })
-  //     })
-  //         .then(this.onResponse)
-  // }
+  // Отправляет информацию о пользователе на сервер
+  updateUser(name, email) {
+    return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      credentials: this._credentials,
+      body: JSON.stringify({ name, email })
+    })
+      .then(this.onResponse)
+  }
 
-  // // Удаляет карточку с сервера
-  // deleteCard(cardId) {
-  //     return fetch(`${this._url}/cards/${cardId}`, {
-  //         method: 'DELETE',
-  //         headers: this._headers,
-  //         credentials: 'include',
-  //     })
-  //         .then(this.onResponse)
-  // }
-
-  // // Ставит / убирает лайки
-  // changeLikeCardStatus(cardId, isLiked) {
-  //     return fetch(`${this._url}/cards/${cardId}/likes`, {
-  //         method: `${isLiked ? 'PUT' : 'DELETE'}`,
-  //         headers: this._headers,
-  //         credentials: 'include',
-  //     })
-  //         .then(this.onResponse)
-  // }
 }
 
 const moviesApi = new Api({
@@ -95,7 +80,6 @@ const moviesApi = new Api({
   credentials: 'omit',
   headers: {
     'Content-Type': 'application/json',
-    // "Access-Control-Allow-Credentials": 'X-Custom-Information',
   },
 })
 
