@@ -1,5 +1,5 @@
 .form__error {
-  visibility: hidden;
+  visibility: visible;
   margin-bottom: 10px;
   font-size: 10px;
   font-weight: 400;
