@@ -1,31 +1,39 @@
 import React from 'react';
-import imageSrc from '../../images/pic__COLOR_pic.png';
 import icon from '../../images/icon__COLOR_invisible.svg';
+// import imageSrc from '../../images/pic__COLOR_pic.png';
 
 
 function MoviesCard(props) {
   const [isSave, setIsSave] = React.useState(false);
-  const altText = 'Какой-то заменяемый текст';
+  // const [newListCards, setNewListCards] = React.useState([]);
   const URL = 'https://api.nomoreparties.co';
+  // console.log('рендер moviesCard')
+  // React.useEffect(() => {
+  //   if (localStorage.getItem('savedCards')) {
+  //     setNewListCards(localStorage.getItem('savedCards'));
+  //   } else {
+  //     localStorage.setItem('savedCards', []);
+  //   }
+  // }, []);
 
-  const [card, setCard] = React.useState({});
-  React.useEffect(() => {
-    if (props.card) {
-      setCard(props.card);
-    } else {
-      console.log('Карточка не отрисовалась');
-    }
-  }, []);
-
+  // React.useEffect(() => {
+  //   // console.log(newListCards);
+  //   // console.log(localStorage);
+    
+  // }, []);
+  
   function saveCardFilm(event) {
+    // setNewListCards([...newListCards, props.card]);
+    localStorage.setItem(props.card.nameRU, JSON.stringify(props.card));
+    // console.log(newListCards);
     setIsSave(true);
   }
 
   return (
-    <li className="card" onClick={saveCardFilm}>
+    <li className="card">
       <div className="card__save-widget" >
         {!isSave ?
-          <button type="button" className='card__save-button'>Сохранить</button>
+          <button type="button" className='card__save-button' onClick={saveCardFilm}>Сохранить</button>
           :
           <div className="card__save-icon-circle">
             <img src={icon} alt="Иконка: сохранено" className="card__save-icon" />
@@ -33,13 +41,13 @@ function MoviesCard(props) {
         }
       </div>
       <a className='card__link' href={props.card.trailerLink} target="_blank" rel="noopener noreferrer">
-        <img src={`${URL}/${props.card.image.url}`} alt={altText} className="card__image" />
+        <img src={`${URL}/${props.card.image.url}`} alt={`Обложка фильма: ${props.card.nameRU}`} className="card__image" />
       </a>
 
       <div className="card__signature">
-        <p className="card__titile">{card.nameRU}</p>
+        <p className="card__titile">{props.card.nameRU}</p>
         <div className="card__duration">
-          <p className="card__time">{card.duration} мин.</p>
+          <p className="card__time">{props.card.duration} мин.</p>
         </div>
       </div>
     </li>
