@@ -2,9 +2,11 @@ import React from 'react';
 import accountImage from '../../images/icon__COLOR_icon-main.svg'
 import logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Navigation(props) {
-  // console.log(props.isLoggined);
+  const currentUser = React.useContext(CurrentUserContext);
+
   return (
     <nav className="navigation">
       <Link to='/' className='navigation__logo-link'>
@@ -16,7 +18,7 @@ function Navigation(props) {
       </nav>
       <div className="navigation__account-vidget navigation__account-vidget_mobile">
         <Link to='/profile' className="navigation__account-vidget">
-          <p className="navigation__account-name">Аккаунт</p>
+          <p className="navigation__account-name">{currentUser.user.name}</p>
           <div className="navigation__account-circle-icon">
             <img src={accountImage} alt='Иконка' className="navigation__account-icon" />
           </div>
