@@ -1,15 +1,46 @@
 import React from 'react';
+import validator from 'validator';
+import ErrorValid from '../ErrorValid/ErrorValid';
 import logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 
 function Login(props) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [isDisabled, setIsDisabled] = React.useState(true);
+  const [valid, setValid] = React.useState({});
 
   function handleChange(event) {
     const target = event.target;
     const value = target.value;
+    
+    setValid(validate(target));
+    
     target.id === 'email-input' ? setEmail(value) : setPassword(value);
+  }
+
+  function validate(input) {
+    if (!input.validity.valid) {
+      if (input.name === 'email' && !validator.isEmail(input.value)) {
+        setIsDisabled(true);
+        return {
+          name: input.name,
+          message: input.validationMessage
+        }
+      } else {
+        setIsDisabled(true);
+        return {
+          name: input.name,
+          message: input.validationMessage
+        }
+      }
+    } else {
+      setIsDisabled(false);
+      return {
+        name: null,
+        message: null
+      };
+    }
   }
 
   function handleSubmit(event) {
@@ -30,13 +61,13 @@ function Login(props) {
         </div>
         <form className="register__form" onSubmit={handleSubmit}>
           <label htmlFor="email-input" className="register__label">E-mail</label>
-          <input id='email-input' type="email" className="register__input" onChange={handleChange} value={email} required />
-          <p className="form__error">Что-то пошло не так...</p>
+          <input name='email' id='email-input' type="email" className="register__input" onChange={handleChange} value={email} required />
+          {valid.name === 'email' && <ErrorValid error={valid} />}
           <label htmlFor="password-input" className="register__label">Пароль</label>
           <input id='password-input' type="password" className="register__input error-input" onChange={handleChange} value={password} required />
-          <p className="form__error">Что-то пошло не так...</p>
+          {valid.name === 'password' && <ErrorValid error={valid} />}
           <div className="register__buttons">
-            <button type="submit" className='register__submit-btn'>Войти</button>
+            <button type="submit" className='register__submit-btn' disabled={isDisabled}>Войти</button>
             <p className="register__register">
               Еще не зарегистрированы? <Link to='/signup' className='register__login-link'>Регистрация</Link>
             </p>
