@@ -10,8 +10,7 @@ import ErrorPage from '../ErrorPage/ErrorPage';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { registration, authorization, login } from '../../utils/MainApi';
-import Navigation from '../Navigation/Navigation';
+import { registration, authorization, login, logout } from '../../utils/MainApi';
 
 
 function App() {
@@ -19,28 +18,24 @@ function App() {
   const navigate = useNavigate();
 
   const [isLoggined, setIsLoggined] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState({});
+  const [currentUser, setCurrentUser] = React.useState({ name: "", email: "" });
 
 
   React.useEffect(() => {
-    if (localStorage.getItem('token')) {
-      setIsLoggined(true);
-      navigate('/')
-
-    }
-    // signIn();
+    signIn();
+    navigate('/');
   }, [isLoggined]);
 
   // Регистрация
   function handleRegister({ name, email, password }) {
-    console.log('Пришло из формы: ', name, email, password);
+    // console.log('Пришло из формы: ', name, email, password);
     registration(name, email, password)
       .then(() => {
-        console.log('Успешно зарегался');
+        console.log('Успешно зарегистрировался');
         navigate('/signin');
       })
       .catch(err => {
-        console.log('Не зарегистрировался ', err.message);
+        throw new Error('Не зарегистрировался ', err.message);
       })
   }
 
@@ -49,11 +44,20 @@ function App() {
     console.log('Начало авторизации');
     authorization(email, password)
       .then(() => {
+        // console.log('Берет токен из cookie');
+        // if (document.cookie['token']) {
+        //   console.log('Токен есть, начинает вход')
+        //   signIn();
+        //   navigate('/');
+        // } else {
+
+        // }
         console.log('Берет токен из localStorage');
         if (localStorage.getItem('token')) {
           console.log('Токен есть, начинает вход')
           signIn();
           navigate('/');
+          console.log('Успешно авторизовался');
         } else {
           throw new Error('Не авторизовался ');
         }
@@ -68,6 +72,7 @@ function App() {
       login(token).then(user => {
         setCurrentUser(user);
         setIsLoggined(true);
+        console.log('Успешно залогинился');
       })
         .catch(err => { console.log('Что-то не так с токеном: ', err.message) })
     } else {
@@ -75,12 +80,18 @@ function App() {
     }
   }
 
-
+  // Выход
   function signOut() {
     if (isLoggined) {
-      localStorage.clear();
-      setIsLoggined(false);
-      navigate('/');
+      logout().then(() => {
+        localStorage.clear();
+        setIsLoggined(false);
+        navigate('/');
+        console.log('Успешно разлогинен');
+      })
+      .catch(err => {console.log('Не разлогинился: ', err.message)})
+    } else {
+      console.log('Уже разлогинен.');
     }
   }
 
