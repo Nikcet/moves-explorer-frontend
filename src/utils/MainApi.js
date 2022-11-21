@@ -1,7 +1,8 @@
 import { mainApiUrl } from './config';
+import { localUrl } from './config';
 
 function onResponse(res) {
-    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res}`);
+    return res.ok ? res.json() : res;
 }
 
 export const registration = (name, email, password) => {
@@ -64,3 +65,69 @@ export const logout = () => {
     )
         .then(res => onResponse(res))
 }
+
+// Получает информацию о пользователе
+export const getUser = () => {
+    return fetch(`${mainApiUrl}/users/me`, {
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true
+        },
+        credentials: 'include',
+    })
+        .then(res => onResponse(res))
+}
+
+// Отправляет информацию о пользователе на сервер
+export const updateUser = (name, email) => {
+    return fetch(`${mainApiUrl}/users/me`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true
+        },
+        credentials: 'include',
+        body: JSON.stringify({ name, email })
+    })
+        .then(res => onResponse(res))
+}
+
+
+// Отправляет карточку с фильмом
+export const postMovie =({ country, director, duration, year, description, image, trailerLink, thumbnail, nameRU, nameEN, id }) => {
+    return fetch(`${mainApiUrl}/saved-movies`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true
+    },
+      credentials: 'include',
+      body: JSON.stringify({
+        country,
+        director,
+        duration,
+        year,
+        description,
+        image,
+        trailerLink,
+        thumbnail,
+        nameRU,
+        nameEN,
+        id,
+      }),
+    })
+    .then(res => onResponse(res))
+  }
+
+  
+export const deleteMovie = (movieId) => {
+    return fetch(`${mainApiUrl}/movies/${movieId}`, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true
+    },
+      credentials: 'include',
+    })
+      .then(this.onResponse)
+  }

@@ -16,7 +16,7 @@ function Movies(props) {
         setSearchCards(cardsList);
       })
       .catch(err =>
-        console.log("Не загружаются карточки:", err.message)
+        console.log("Не загружаются карточки:", err)
       )
   }, []);
 
