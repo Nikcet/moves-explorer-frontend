@@ -18,7 +18,7 @@ function Navigation(props) {
       </nav>
       <div className="navigation__account-vidget navigation__account-vidget_mobile">
         <Link to='/profile' className="navigation__account-vidget">
-          <p className="navigation__account-name">{currentUser.user.name}</p>
+          <p className="navigation__account-name">Аккаунт</p>
           <div className="navigation__account-circle-icon">
             <img src={accountImage} alt='Иконка' className="navigation__account-icon" />
           </div>

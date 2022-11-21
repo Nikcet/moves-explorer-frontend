@@ -18,3 +18,7 @@
 @import url(./__time/card__time.css);
 @import url(./__titile/card__titile.css);
 @import url(./__link/card__link.css);
+@import url(./__delete-widget/card__delete-widget.css);
+@import url(./__delete-button/card__delete-button.css);
+@import url(./__delete-icon-circle/card__delete-icon-circle.css);
+@import url(./__delete-icon/card__delete-icon.css);

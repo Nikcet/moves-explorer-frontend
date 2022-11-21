@@ -3,7 +3,6 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
 import More from '../More/More';
 import { SearchCards } from '../../contexts/SearchCards';
-// import moviesApi from '../../utils/MoviesApi';
 
 
 
@@ -18,6 +17,7 @@ function MoviesCardList(props) {
 
   const searchedCards = React.useContext(SearchCards);
 
+  // Держит прелоадер, пока список карточек пустой
   React.useEffect(() => {
     if (searchedCards.length > 0) {
       setIsPreloader(false);
@@ -27,17 +27,19 @@ function MoviesCardList(props) {
     }
   }, [searchedCards]);
 
+  // Отслеживает размер окна браузера и если размер окна изменился, меняет количество подгружаемых карточек
   React.useEffect(() => {
-    window.onresize = () => {setWindowWidth(window.screen.width)}
+    window.onresize = () => {setWindowWidth(window.screen.width)};
     
     if (windowWidth < 1280) {
       setAmountOfNewCards(2);
     } else {
       setAmountOfNewCards(3);
     }
-    return () => {window.onresize = false}
+    return () => {window.onresize = null}
   }, [windowWidth])
 
+  // Добавляет новые карточки в список для рендера
   function newCards() {
     const totalAmount = amountOfCards + amountOfNewCards;
     setAmountOfCards(totalAmount);
