@@ -1,7 +1,6 @@
 import React from 'react';
 import icon from '../../images/search-icon.svg';
 import moviesApi from '../../utils/MoviesApi';
-import { SearchCards } from '../../contexts/SearchCards';
 
 
 function Search(props) {
@@ -9,9 +8,7 @@ function Search(props) {
   const [searchData, setSearchData] = React.useState('');
   const [isShort, setIsShort] = React.useState(false);
   const [cards, setCards] = React.useState([]);
-  // const [searchedCards, setSearchedCards] = React.useState([]);
 
-  // const cards = React.useContext(SearchCards);
 
   function handleChange(event) {
     const target = event.target;
@@ -25,22 +22,26 @@ function Search(props) {
 
 
   React.useEffect(() => {
-    Promise.resolve(moviesApi.getMovies())
-      .then(cardsList => {
-        setCards(cardsList);
-      })
-      .catch(err =>
-        console.log("Не загружаются карточки:", err.message)
-      )
+    if (!props.isSavedCards) {
+      Promise.resolve(moviesApi.getMovies())
+        .then(cardsList => {
+          setCards(cardsList);
+        })
+        .catch(err =>
+          console.log("Не загружаются карточки:", err.message)
+        )
+    } 
   }, []);
 
 
-  function search(event) {
+  function searchCards(event) {
     event.preventDefault();
 
-    const result = cards.map(card => {
+    let cardsToSearch = props.isSavedCards ? props.getCards() : cards;
+    
+    const result = cardsToSearch.map((card) => {
       let isSearched = false;
-      Object.values(card).forEach(el => {
+      Object.values(card).forEach((el) => {
 
         if (typeof el === "string") {
           let condition;
@@ -64,7 +65,6 @@ function Search(props) {
         return card;
       }
     })
-
     props.onCards(result.filter(card => card !== undefined));
   }
 
@@ -72,7 +72,7 @@ function Search(props) {
 
   return (
     <section className="search">
-      <form className="search__form" onSubmit={search}>
+      <form className="search__form" onSubmit={searchCards}>
         <div className="search__input">
           <label htmlFor='search-input' className="search__icon">
             <img src={icon} alt="Знакчек поиска" className='search__icon-image' />
