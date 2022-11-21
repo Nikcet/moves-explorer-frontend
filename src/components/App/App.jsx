@@ -23,8 +23,8 @@ function App() {
 
   React.useEffect(() => {
     signIn();
-    navigate('/');
-  }, [isLoggined]);
+    // navigate('/');
+  }, []);
 
   // Регистрация
   function handleRegister({ name, email, password }) {
@@ -83,11 +83,11 @@ function App() {
   // Выход
   function signOut() {
     if (isLoggined) {
+      navigate('/');
       logout().then(() => {
         localStorage.clear();
         setIsLoggined(false);
-        navigate('/');
-        console.log('Успешно разлогинен');
+        console.log('Успешно разлогинился');
       })
       .catch(err => {console.log('Не разлогинился: ', err.message)})
     } else {
@@ -108,29 +108,26 @@ function App() {
                 <Footer />
               </>
             } />
-            <Route path='/movies' element={
+            {isLoggined && <Route path='/movies' element={
               <>
-                {!isLoggined && <Navigate to='/signin' />}
                 <Header isLoggined={isLoggined} />
                 <Movies />
                 <Footer />
               </>
-            } />
-            <Route path='/saved-movies' element={
+            } />}
+            {isLoggined && <Route path='/saved-movies' element={
               <>
-                {!isLoggined && <Navigate to='/signin' />}
                 <Header isLoggined={isLoggined} />
                 <SavedMovies />
                 <Footer />
               </>
-            } />
-            <Route path='/profile' element={
+            } />}
+            {isLoggined && <Route path='/profile' element={
               <>
-                {!isLoggined && <Navigate to='/signin' />}
                 <Header isLoggined={isLoggined} />
                 <Profile signOut={signOut} />
               </>
-            } />
+            } />}
             <Route path='/signin' element={<Login onLogin={authorizationAndSignIn} />} />
             <Route path='/signup' element={<Register onRegister={handleRegister} />} />
             <Route path='*' element={<ErrorPage />} />
