@@ -54,7 +54,7 @@ function SavedMoviesCardList(props) {
         {visibleCards.map(item => {
           return (
             <MoviesCard
-              key={item.id}
+              key={item._id}
               card={item}
               onCardClick={props.onCardClick}
               onCardLike={props.onCardLike}
