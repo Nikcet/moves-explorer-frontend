@@ -1,5 +1,4 @@
-import { mainApiUrl } from './config';
-import { localUrl } from './config';
+import { mainApiUrl, moviesApiUrl, localUrl, imageStorageUrl } from './config';
 
 function onResponse(res) {
     return res.ok ? res.json() : res;
@@ -92,10 +91,27 @@ export const updateUser = (name, email) => {
         .then(res => onResponse(res))
 }
 
+// Получает сохраненные карточки
+export const getMovies = () => {
+    return fetch(`${mainApiUrl}/movies`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true
+    },
+      credentials: 'include',
+    })
+      .then(res => onResponse(res))
+  }
 
 // Отправляет карточку с фильмом
-export const postMovie =({ country, director, duration, year, description, image, trailerLink, thumbnail, nameRU, nameEN, id }) => {
-    return fetch(`${mainApiUrl}/saved-movies`, {
+export const postMovie =({ country, director, duration, year, description, image, trailerLink, nameRU, nameEN, id }) => {
+    // console.log(image.formats.thumbnail.url);
+    const thumbnail = `${imageStorageUrl}${image.formats.thumbnail.url}`;
+    const movieId = id;
+    image = `${imageStorageUrl}${image.url}`;
+
+
+    return fetch(`${mainApiUrl}/movies`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -113,7 +129,7 @@ export const postMovie =({ country, director, duration, year, description, image
         thumbnail,
         nameRU,
         nameEN,
-        id,
+        movieId,
       }),
     })
     .then(res => onResponse(res))
@@ -129,5 +145,5 @@ export const deleteMovie = (movieId) => {
     },
       credentials: 'include',
     })
-      .then(this.onResponse)
+      .then(res => onResponse(res))
   }
