@@ -9,11 +9,16 @@ import { SearchCards } from '../../contexts/SearchCards';
 function Movies(props) {
 
   const [searchCards, setSearchCards] = React.useState([]);
-  
+
   React.useEffect(() => {
     Promise.resolve(moviesApi.getMovies())
       .then(cardsList => {
-        setSearchCards(cardsList);
+        if (!localStorage.getItem('cardsList')) {
+          console.log('Зашел в localStorage');
+          return localStorage.setItem('cardsList', JSON.stringify(cardsList));
+        } else {
+          return setSearchCards(JSON.parse(localStorage.getItem('cardsList')));
+        }
       })
       .catch(err =>
         console.log("Не загружаются карточки:", err)
@@ -26,10 +31,10 @@ function Movies(props) {
 
   return (
     <SearchCards.Provider value={searchCards}>
-    <section className="movies">
-      <Search onCards={returnCards}/>
-      <MoviesCardList/>
-    </section>
+      <section className="movies">
+        <Search onCards={returnCards} />
+        <MoviesCardList />
+      </section>
     </SearchCards.Provider>
   );
 }

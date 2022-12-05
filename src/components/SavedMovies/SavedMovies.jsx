@@ -2,30 +2,26 @@ import React from 'react';
 import Search from '../SearchForm/Search';
 import SavedMoviesCardList from '../SavedMoviesCardList.jsx/SavedMoviesCardList';
 import { SearchSavedCards } from '../../contexts/SearchSavedCards';
+import { getMovies, deleteMovie } from '../../utils/MainApi';
 
 function SavedMovies(props) {
 
   const [savedCards, setSavedCards] = React.useState([]);
-  // const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     getCards();
   }, []);
 
   function getCards() {
-    let objects = [];
-    let keys = Object.keys(localStorage);
-    for (let key of keys) {
-      if (key !== 'token') {
-        objects.push(JSON.parse(localStorage.getItem(key)));
-      }
-    }
-    setSavedCards(objects);
-    return objects;
+    getMovies()
+    .then(cards => {
+      setSavedCards(cards.movies);
+    })
+    .catch(err => console.log(err))
   }
 
-  function deleteCard(key) {
-    localStorage.removeItem(key);
+  function deleteCard(movieId) {
+    deleteMovie(movieId);
     getCards();
   }
 
