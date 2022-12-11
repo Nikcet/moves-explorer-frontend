@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -28,7 +28,6 @@ function App() {
 
   // Регистрация
   function handleRegister({ name, email, password }) {
-    // console.log('Пришло из формы: ', name, email, password);
     registration(name, email, password)
       .then(() => {
         console.log('Успешно зарегистрировался');
@@ -44,16 +43,9 @@ function App() {
     console.log('Начало авторизации');
     authorization(email, password)
       .then(() => {
-        // console.log('Берет токен из cookie');
-        // if (document.cookie['token']) {
-        //   console.log('Токен есть, начинает вход')
-        //   signIn();
-        //   navigate('/');
-        // } else {
-
-        // }
         console.log('Берет токен из localStorage');
-        if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token');
+        if (token !== "undefined" && token !== undefined) {
           console.log('Токен есть, начинает вход')
           signIn();
           navigate('/');
@@ -62,34 +54,37 @@ function App() {
           throw new Error('Не авторизовался ');
         }
       })
-      .catch(err => { console.log('Не авторизовался ', err.message) });
+      .catch(err => { console.log(err.message) });
   }
 
   // Вход
   function signIn() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token')
     if (token) {
-      login(token).then(user => {
-        setCurrentUser(user);
-        setIsLoggined(true);
-        console.log('Успешно залогинился');
-      })
+      login(token)
+        .then((user) => {
+          setCurrentUser(user);
+          setIsLoggined(true);
+          console.log('Успешно залогинился');
+        })
         .catch(err => { console.log('Что-то не так с токеном: ', err.message) })
     } else {
-      setIsLoggined(false);
+      console.log('Нет токена.');
     }
+
   }
 
   // Выход
   function signOut() {
     if (isLoggined) {
       navigate('/');
-      logout().then(() => {
-        localStorage.clear();
-        setIsLoggined(false);
-        console.log('Успешно разлогинился');
-      })
-      .catch(err => {console.log('Не разлогинился: ', err.message)})
+      logout()
+        .then(() => {
+          localStorage.clear();
+          setIsLoggined(false);
+          console.log('Успешно разлогинился');
+        })
+        .catch(err => { console.log('Не разлогинился: ', err.message) })
     } else {
       console.log('Уже разлогинен.');
     }
