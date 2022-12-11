@@ -3,15 +3,16 @@ import icon from '../../images/icon__COLOR_invisible.svg';
 import deleteIcon from '../../images/icon__COLOR_icon-main-delete.svg';
 import { postMovie } from '../../utils/MainApi';
 import { imageStorageUrl } from '../../utils/config';
-
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function MoviesCard(props) {
   const [isSave, setIsSave] = React.useState(false);
   const [image, setImage] = React.useState('');
 
+  const currentUser = React.useContext(CurrentUserContext);
+
   React.useEffect(() => {
-    console.log(props.card.image.url)
-    if (props.card.image.url){
+    if (props.card.image.url) {
       setImage(`${imageStorageUrl}${props.card.image.url}`);
     } else {
       setImage(props.card.image);
@@ -36,15 +37,17 @@ function MoviesCard(props) {
 
   return (
     <li className="card">
-      {!props.isSaved ? <div className="card__save-widget" >
+      {!props.isSaved && <div className="card__save-widget" >
         {!isSave ? <button type="button" className='card__save-button' onClick={saveCardFilm}>Сохранить</button>
           :
           <div className="card__save-icon-circle">
             <img src={icon} alt="Иконка: сохранено" className="card__save-icon" />
           </div>
         }
-      </div> :
-        <div className="card__delete-widget">
+      </div>
+      }
+      {
+        props.card.owner === currentUser.user._id && <div className="card__delete-widget">
           <button className="card__delete-button" type="button" onClick={deleteCardFilm}>
             <div className="card__delete-icon-circle">
               <img src={deleteIcon} alt="Иконка: удалить" className="card__delete-icon" />
@@ -52,6 +55,7 @@ function MoviesCard(props) {
           </button>
         </div>
       }
+
 
 
       <a className='card__link' href={props.card.trailerLink} target="_blank" rel="noopener noreferrer">
