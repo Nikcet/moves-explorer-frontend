@@ -1,7 +1,7 @@
 import { mainApiUrl, moviesApiUrl, localUrl, imageStorageUrl } from './config';
 
 function onResponse(res) {
-    return res.ok ? res.json() : res;
+    return res.ok ? res.json() : new Error(res.statusText);
 }
 
 export const registration = (name, email, password) => {
@@ -28,9 +28,10 @@ export const authorization = (email, password) => {
         }
     )
         .then(res => onResponse(res))
-        .then(data => {
-            // document.cookie = `token=${data.token}, max-age=3600`;
-            localStorage.setItem('token', data.token);
+        .then(res => {
+            if (res.token) {
+                localStorage.setItem('token', res.token);
+            }
         })
 }
 
@@ -52,17 +53,20 @@ export const login = (jwtToken) => {
 
 export const logout = () => {
     return fetch(
-        `${mainApiUrl}/users/me`,
+        `${mainApiUrl}/signout`,
         {
             method: 'POST',
-            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Credentials": true
-            }
+            },
+            credentials: 'include',
         }
     )
-        .then(res => onResponse(res))
+        .then(res => {
+            console.log(res);
+            onResponse(res);
+        })
 }
 
 // Получает информацию о пользователе
@@ -94,17 +98,17 @@ export const updateUser = (name, email) => {
 // Получает сохраненные карточки
 export const getMovies = () => {
     return fetch(`${mainApiUrl}/movies`, {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true
-    },
-      credentials: 'include',
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true
+        },
+        credentials: 'include',
     })
-      .then(res => onResponse(res))
-  }
+        .then(res => onResponse(res))
+}
 
 // Отправляет карточку с фильмом
-export const postMovie =({ country, director, duration, year, description, image, trailerLink, nameRU, nameEN, id }) => {
+export const postMovie = ({ country, director, duration, year, description, image, trailerLink, nameRU, nameEN, id }) => {
     // console.log(image.formats.thumbnail.url);
     const thumbnail = `${imageStorageUrl}${image.formats.thumbnail.url}`;
     const movieId = id;
@@ -112,38 +116,38 @@ export const postMovie =({ country, director, duration, year, description, image
 
 
     return fetch(`${mainApiUrl}/movies`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true
-    },
-      credentials: 'include',
-      body: JSON.stringify({
-        country,
-        director,
-        duration,
-        year,
-        description,
-        image,
-        trailerLink,
-        thumbnail,
-        nameRU,
-        nameEN,
-        movieId,
-      }),
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            country,
+            director,
+            duration,
+            year,
+            description,
+            image,
+            trailerLink,
+            thumbnail,
+            nameRU,
+            nameEN,
+            movieId,
+        }),
     })
-    .then(res => onResponse(res))
-  }
+        .then(res => onResponse(res))
+}
 
-  
+
 export const deleteMovie = (movieId) => {
     return fetch(`${mainApiUrl}/movies/${movieId}`, {
-      method: 'DELETE',
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true
-    },
-      credentials: 'include',
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true
+        },
+        credentials: 'include',
     })
-      .then(res => onResponse(res))
-  }
+        .then(res => onResponse(res))
+}
