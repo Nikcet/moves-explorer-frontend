@@ -13,7 +13,7 @@ function Header(props) {
       {props.isLoggined && <Navigation />}
 
       {!props.isLoggined && <div className="header__buttons">
-        <Link to='/signup' className='header__button header__button-reg'>Регистриция</Link>
+        <Link to='/signup' className='header__button header__button-reg'>Регистрация</Link>
         <Link to='/signin' className='header__button header__button-login'>Войти</Link>
       </div>}
 
