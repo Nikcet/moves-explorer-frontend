@@ -1,6 +1,7 @@
 import React from 'react';
-import validator from 'validator';
 import ErrorValid from '../ErrorValid/ErrorValid';
+import validateEmail from '../../utils/validateEmail';
+import validatePassword from '../../utils/validatePassword';
 import logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 
@@ -8,15 +9,33 @@ function Register(props) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [isDisabled, setIsDisabled] = React.useState(true);
-  const [valid, setValid] = React.useState({});
+  const [emailIsValid, setEmailIsValid] = React.useState(false);
+  const [passwordIsValid, setPasswordIsValid] = React.useState(false);
+  const [valid, setValid] = React.useState({
+    name: '',
+    message: '',
+    isDisabled: true,
+  });
+
+  function setValidity(obj) {
+    setValid(obj);
+  }
 
   function handleChange(event) {
     const target = event.target;
     const value = target.value;
 
-    setValid(validate(target));
-
+    if (target.name === "email") {
+      setEmailIsValid(validateEmail(target));
+    } else if (target.name === "password") {
+      setPasswordIsValid(validatePassword(target));
+    }
+    
+    setValidity({
+      name: target.name,
+      message: target.validationMessage,
+      isDisabled: !(emailIsValid && passwordIsValid),
+    });
 
     switch (target.id) {
       case 'name-input':
@@ -30,44 +49,21 @@ function Register(props) {
         break;
       default:
         break;
-
-
-    }
-  }
-
-  function validate(input) {
-    if (!input.validity.valid) {
-      if (input.name === 'email' && !validator.isEmail(input.value)) {
-        setIsDisabled(true);
-        return {
-          name: input.name,
-          message: input.validationMessage
-        }
-      } else {
-        setIsDisabled(true);
-        return {
-          name: input.name,
-          message: input.validationMessage
-        }
       }
-    } else {
-      setIsDisabled(false);
-      return {
-        name: null,
-        message: null
-      };
-    }
-  }
 
+      // console.log(valid);
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    props.onRegister({
-      name,
-      email,
-      password,
-    });
+    if (!valid.isDisabled) {
+      props.onRegister({
+        name,
+        email,
+        password,
+      });
+    }
   }
   return (
     <section className="register">
@@ -117,7 +113,7 @@ function Register(props) {
           />
           {valid.name === 'password' && <ErrorValid error={valid} />}
           <div className="register__buttons">
-            <button type="submit" className='register__submit-btn' disabled={isDisabled}>Зарегистрироваться</button>
+            <button type="submit" className='register__submit-btn' disabled={valid.isDisabled}>Зарегистрироваться</button>
             <p className="register__login">
               Уже зарегистрированы? <Link to='/signin' className='register__login-link'>Войти</Link>
             </p>
