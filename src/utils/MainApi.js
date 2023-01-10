@@ -63,10 +63,6 @@ export const logout = () => {
             credentials: 'include',
         }
     )
-        .then(res => {
-            console.log(res);
-            onResponse(res);
-        })
 }
 
 // Получает информацию о пользователе
@@ -96,7 +92,7 @@ export const updateUser = (name, email) => {
 }
 
 // Получает сохраненные карточки
-export const getMovies = () => {
+export const getSavedMovies = () => {
     return fetch(`${mainApiUrl}/movies`, {
         headers: {
             "Content-Type": "application/json",
