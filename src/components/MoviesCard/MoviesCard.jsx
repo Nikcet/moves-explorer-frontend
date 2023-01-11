@@ -23,11 +23,11 @@ function MoviesCard(props) {
     props.onDeleteCard(props.card._id);
   }
 
-  function saveCardFilm(event) {
+  function saveCardFilm() {
     postMovie(props.card)
       .then((data) => {
         if (data) {
-          return setIsSave(true);
+          setIsSave(true);
         } else {
           console.log('Фильм не сохранился.');
         }
@@ -35,10 +35,11 @@ function MoviesCard(props) {
       .catch((err) => { console.log(err) });
   }
 
+
   return (
     <li className="card">
       {!props.isSaved && <div className="card__save-widget" >
-        {!isSave ? <button type="button" className='card__save-button' onClick={saveCardFilm}>Сохранить</button>
+        {!isSave && !props.isSavedCard ? <button type="button" className='card__save-button' onClick={saveCardFilm}>Сохранить</button>
           :
           <div className="card__save-icon-circle">
             <img src={icon} alt="Иконка: сохранено" className="card__save-icon" />
@@ -55,8 +56,6 @@ function MoviesCard(props) {
           </button>
         </div>
       }
-
-
 
       <a className='card__link' href={props.card.trailerLink} target="_blank" rel="noopener noreferrer">
         <img src={image} alt={`Обложка фильма: ${props.card.nameRU}`} className="card__image" />

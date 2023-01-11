@@ -2,11 +2,7 @@ import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
 import More from '../More/More';
-// import { SearchCards } from '../../contexts/SearchCards';
 import { SearchSavedCards } from '../../contexts/SearchSavedCards';
-
-
-
 
 function SavedMoviesCardList(props) {
   const [isPreloader, setIsPreloader] = React.useState(true);
@@ -22,7 +18,8 @@ function SavedMoviesCardList(props) {
   React.useEffect(() => {
     if (savedCards.length > 0) {
       setIsPreloader(false);
-      newCards();
+      console.log('setVisibleCards(savedCards)', savedCards);
+      setVisibleCards(savedCards);
     } else {
       setIsPreloader(true);
     }
@@ -40,33 +37,46 @@ function SavedMoviesCardList(props) {
     return () => {window.onresize = null}
   }, [windowWidth])
 
+
   // Добавляет новые карточки в список для рендера
-  function newCards() {
+  async function addNewCardsToRender() {
     const totalAmount = amountOfCards + amountOfNewCards;
     setAmountOfCards(totalAmount);
-    setVisibleCards(savedCards.slice(0, totalAmount));
-
+    let allSavedFilms = [];
+    try {
+      allSavedFilms = JSON.parse(localStorage.getItem('allSavedFilms')).slice(0, totalAmount);
+      setVisibleCards(allSavedFilms);
+    } catch (err) {
+      console.log(err);
+    }
   }
+  
 
-  return (
+  if (visibleCards.length > 0) {
+    return (
+      <section className="movies-card-list">
+        {isPreloader ? <Preloader /> : <ul className="card-list">
+          {visibleCards.map(item => {
+              return (
+                <MoviesCard
+                  key={item._id}
+                  card={item}
+                  onDeleteCard={props.onDeleteCard}
+                  isSaved={true}
+                />
+              )
+          })}
+        </ul>}
+        {savedCards > visibleCards && !isPreloader && <More setNewCards={addNewCardsToRender}/>}
+      </section>
+    );
+  } else {
+    return (
     <section className="movies-card-list">
-      {isPreloader ? <Preloader /> : <ul className="card-list">
-        {visibleCards.map(item => {
-          return (
-            <MoviesCard
-              key={item._id}
-              card={item}
-              onCardClick={props.onCardClick}
-              onCardLike={props.onCardLike}
-              onDeleteCard={props.onDeleteCard}
-              isSaved={true}
-            />
-          )
-        })}
-      </ul>}
-      {savedCards > visibleCards && !isPreloader && <More setNewCards={newCards}/>}
+      {isPreloader ? <Preloader /> : <p className='movies-card-list__plug'>Ничего не нашлось.</p>}
     </section>
-  );
+    )
+  }
 }
 
 export default SavedMoviesCardList;
