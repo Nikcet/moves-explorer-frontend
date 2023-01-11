@@ -3,6 +3,8 @@ import { updateUser } from '../../utils/MainApi';
 import validator from 'validator';
 import { useContext } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import checkToken from '../../utils/checkToken';
+import { useNavigate } from 'react-router-dom';
 
 function Profile(props) {
 
@@ -13,6 +15,19 @@ function Profile(props) {
   const [isEdit, setIsEdit] = React.useState(false);
   const [isDisabled, setIsDisabled] = React.useState(true);
 
+  const navigate = useNavigate();
+
+  // Проверяет токен при монтировании компонента
+  React.useEffect(() => {
+    if (!checkToken()) {
+      navigate('/');
+    }
+  }, []);
+
+  React.useEffect(() => {
+    setNewName(currentUser.user.name);
+    setNewEmail(currentUser.user.email);
+  }, [])
 
 
   function handleChange(event) {
@@ -32,8 +47,10 @@ function Profile(props) {
     event.preventDefault();
 
     updateUser(newName, newEmail)
-      .then(data => { console.log(data) })
-      .catch(err => { console.log(err) })
+      .then(data => {
+        props.updateCurrentUser(data.name, data.email);
+      })
+      .catch(err => { console.log('Не удалось обновить данные: ', err) })
   }
 
 
@@ -61,6 +78,10 @@ function Profile(props) {
     }
   }
 
+  function toggle_button() {
+    setIsEdit(!isEdit);
+  }
+
   return (
     <section className="profile">
       <div className="profile__content">
@@ -71,10 +92,10 @@ function Profile(props) {
             <input className="profile__input profile__name-input"
               name='name'
               type="text"
-              placeholder={currentUser.user.name}
               onChange={handleChange}
               value={newName}
               minLength={2}
+              readOnly={!isEdit}
             />
           </label>
           <label className="profile__row profile__email">
@@ -82,20 +103,20 @@ function Profile(props) {
             <input className="profile__input profile__email-input"
               name='email'
               type="email"
-              placeholder={currentUser.user.email}
               onChange={handleChange}
               value={newEmail}
               minLength={2}
+              readOnly={!isEdit}
             />
           </label>
 
           {
             !isEdit ? <div className="profile__buttons">
-              <input type="submit" value="Редактировать" className="profile__btn profile__edit-btn" onClick={() => {setIsEdit(true)}}/>
+              <input type="submit" value="Редактировать" className="profile__btn profile__edit-btn" onClick={toggle_button} />
               <input type="button" value="Выйти из аккаунта" className="profile__btn profile__exit-btn" onClick={props.signOut} />
             </div> :
               <div className="register__buttons">
-                <button type="submit" className='register__submit-btn' disabled={isDisabled}>Сохранить</button>
+                <button type="submit" className='register__submit-btn' disabled={isDisabled} onClick={toggle_button}>Сохранить</button>
               </div>
           }
         </form>
