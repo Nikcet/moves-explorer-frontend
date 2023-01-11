@@ -12,3 +12,5 @@
   cursor: pointer;
   opacity: .8;
 }
+
+.profile__btn:disabled {}

@@ -16,6 +16,6 @@
 }
 
 .card__save-button:hover{
-  opacity: .9;
+  opacity: .7;
   cursor: pointer;
 }

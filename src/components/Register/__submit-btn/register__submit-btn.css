@@ -19,3 +19,10 @@
   opacity: .8;
   cursor: pointer;
 }
+
+.register__submit-btn:disabled {
+  cursor: default;
+  opacity: 1;
+  background-color: #335fa5;
+  color: #C2C2C2;
+}
