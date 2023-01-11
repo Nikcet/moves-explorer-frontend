@@ -15,9 +15,16 @@ function Search(props) {
     const value = target.value;
     if (target.type === 'checkbox') {
       setIsShort(target.checked);
+      localStorage.setItem('isShort', JSON.stringify(target.checked));
     } else {
       setSearchData(value);
+      localStorage.setItem('searchData', value);
     }
+  }
+
+  function returnSearchParams() {
+    setSearchData(localStorage.getItem('searchData'));
+    setIsShort(JSON.parse(localStorage.getItem('isShort')));
   }
 
 
@@ -30,45 +37,60 @@ function Search(props) {
         .catch(err =>
           console.log("Не загружаются карточки:", err.message)
         )
-    } 
+    }
   }, []);
+
+  React.useEffect(() => {
+    if (localStorage.getItem('searchData') != null) {
+      returnSearchParams();
+    }
+  }, [])
 
 
   function searchCards(event) {
     event.preventDefault();
 
     let cardsToSearch = props.isSavedCards ? props.getCards() : cards;
-    
-    const result = cardsToSearch.map((card) => {
-      let isSearched = false;
-      Object.values(card).forEach((el) => {
+    if (!cardsToSearch) {
+      cardsToSearch = JSON.parse(localStorage.getItem('allSavedFilms'));
+    }
 
-        if (typeof el === "string") {
-          let condition;
-          if (isShort) {
-            condition = el.includes(searchData) && card.duration <= 40;
-          } else {
-            condition = el.includes(searchData);
-          }
+    let result = [];
+    if (cardsToSearch) {
+      result = cardsToSearch.map((card) => {
+        let isSearched = false;
+        Object.values(card).forEach((el) => {
           
-          if (condition) {
+          if (typeof el === "string") {
+            let condition;
+            if (isShort) {
+              condition = el.toLowerCase().includes(searchData.toLowerCase()) && card.duration <= 40;
+            } else {
+              condition = el.toLowerCase().includes(searchData.toLowerCase());
+            }
+  
+            if (condition) {
+              isSearched = true;
+              return;
+            }
+          } else if (el === searchData) {
             isSearched = true;
             return;
           }
-        } else if (el === searchData) {
-          isSearched = true;
-          return;
+        })
+  
+        if (isSearched) {
+          return card;
         }
       })
-      
-      if (isSearched) {
-        return card;
-      }
-    })
-    props.onCards(result.filter(card => card !== undefined));
+    } else {
+      alert('Ничего не нашел');
+      return;
+    }
+    
+    localStorage.setItem('searchedCards', JSON.stringify(result.filter(card => card !== undefined)));
+    props.getSearchedCards();
   }
-
-
 
   return (
     <section className="search">
@@ -90,7 +112,7 @@ function Search(props) {
         </div>
         <div className="search__shortmovies">
           <label className="search__switch">
-            <input type='checkbox' className="search__checkbox" onChange={handleChange} value={isShort} />
+            <input type='checkbox' className="search__checkbox" onChange={handleChange} checked={isShort} />
             <span className="search__switcher"></span>
           </label>
           <p className="search__shortmovies-text">Короткометражки</p>
