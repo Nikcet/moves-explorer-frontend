@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -29,9 +29,14 @@ function App() {
   // Регистрация
   function handleRegister({ name, email, password }) {
     registration(name, email, password)
-      .then(() => {
-        console.log('Успешно зарегистрировался');
-        navigate('/signin');
+      .then((data) => {
+        if (data) {
+          console.log('Успешно зарегистрировался');
+          authorizationAndSignIn({ email: email, password: password });
+        } else {
+          throw new Error('Не удалось зарегистрироваться.');
+        }
+        // navigate('/signin');
       })
       .catch(err => {
         throw new Error('Не зарегистрировался ', err.message);
@@ -48,7 +53,7 @@ function App() {
         if (token !== "undefined" && token !== undefined) {
           console.log('Токен есть, начинает вход')
           signIn();
-          navigate('/');
+          navigate('/movies');
           console.log('Успешно авторизовался');
         } else {
           throw new Error('Не авторизовался ');
@@ -59,8 +64,8 @@ function App() {
 
   // Вход
   function signIn() {
-    const token = localStorage.getItem('token')
-    if (token) {
+    const token = localStorage.getItem('token');
+    if (token != null) {
       login(token)
         .then((user) => {
           setCurrentUser(user);
@@ -82,12 +87,17 @@ function App() {
         .then(() => {
           localStorage.clear();
           setIsLoggined(false);
+          updateCurrentUser('', '');
           console.log('Успешно разлогинился');
         })
         .catch(err => { console.log('Не разлогинился: ', err.message) })
     } else {
       console.log('Уже разлогинен.');
     }
+  }
+
+  function updateCurrentUser(name, email) {
+    setCurrentUser(name, email);
   }
 
 
@@ -103,28 +113,31 @@ function App() {
                 <Footer />
               </>
             } />
-            {isLoggined && <Route path='/movies' element={
-              <>
-                <Header isLoggined={isLoggined} />
-                <Movies />
-                <Footer />
-              </>
+            {<Route path='/movies' element={
+              isLoggined ?
+                <>
+                  <Header isLoggined={isLoggined} />
+                  <Movies />
+                  <Footer />
+                </> : <Navigate to='/' />
             } />}
-            {isLoggined && <Route path='/saved-movies' element={
-              <>
-                <Header isLoggined={isLoggined} />
-                <SavedMovies />
-                <Footer />
-              </>
+            {<Route path='/saved-movies' element={
+              isLoggined ?
+                <>
+                  <Header isLoggined={isLoggined} />
+                  <SavedMovies />
+                  <Footer />
+                </> : <Navigate to='/' />
             } />}
-            {isLoggined && <Route path='/profile' element={
-              <>
-                <Header isLoggined={isLoggined} />
-                <Profile signOut={signOut} />
-              </>
+            {<Route path='/profile' element={
+              isLoggined ?
+                <>
+                  <Header isLoggined={isLoggined} />
+                  <Profile signOut={signOut} updateCurrentUser={updateCurrentUser} />
+                </> : <Navigate to='/' />
             } />}
-            <Route path='/signin' element={<Login onLogin={authorizationAndSignIn} />} />
-            <Route path='/signup' element={<Register onRegister={handleRegister} />} />
+            {!isLoggined && <Route path='/signin' element={<Login onLogin={authorizationAndSignIn} />} />}
+            {!isLoggined && <Route path='/signup' element={<Register onRegister={handleRegister} />} />}
             <Route path='*' element={<ErrorPage />} />
           </Routes>
         </div>
