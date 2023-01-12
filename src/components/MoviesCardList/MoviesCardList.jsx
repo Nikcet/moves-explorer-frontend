@@ -10,7 +10,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function MoviesCardList(props) {
   const [visibleCards, setVisibleCards] = React.useState([]);
-  const [amountOfCards, setAmountOfCards] = React.useState(9);
+  const [amountOfCards, setAmountOfCards] = React.useState(12);
 
   const [amountOfNewCards, setAmountOfNewCards] = React.useState(3);
   const [windowWidth, setWindowWidth] = React.useState(window.screen.width);
@@ -20,7 +20,7 @@ function MoviesCardList(props) {
 
   React.useEffect(() => {
     if (searchedCards.length > 0) {
-      setVisibleCards(searchedCards);
+      setVisibleCards(searchedCards.slice(0, amountOfCards));
     }
   }, [searchedCards]);
 
@@ -28,20 +28,24 @@ function MoviesCardList(props) {
   React.useEffect(() => {
     window.onresize = () => { setWindowWidth(window.screen.width) };
 
-    if (windowWidth < 1280) {
+    if (windowWidth > 1280) {
+      setAmountOfCards(12);
+      setAmountOfNewCards(3)
+    } else if (windowWidth < 1280 && windowWidth > 480) {
+      setAmountOfCards(8);
       setAmountOfNewCards(2);
-    } else {
-      setAmountOfNewCards(3);
+    } else if (windowWidth < 480 && windowWidth > 320) {
+      setAmountOfCards(5);
+      setAmountOfNewCards(2);
     }
+
     return () => { window.onresize = null }
   }, [windowWidth])
 
   // Добавляет новые карточки в список для рендера
   function newCards() {
-    const totalAmount = amountOfCards + amountOfNewCards;
-    setAmountOfCards(totalAmount);
-    console.log('searchedCards', searchedCards);
-    setVisibleCards(searchedCards.slice(0, totalAmount));
+    setVisibleCards(searchedCards.slice(0, amountOfCards + amountOfNewCards));
+    setAmountOfCards(amountOfCards + amountOfNewCards);
   }
 
   // Проверяет, сохранены ли каротчки в личной библиотеке
