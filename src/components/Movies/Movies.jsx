@@ -55,9 +55,11 @@ function Movies(props) {
   }, []);
 
   function getSavedCards() {
+    turnOnPreloader();
     getSavedMovies()
       .then((cards) => {
         setSavedCards(cards);
+        turnOffPreloader();
       })
       .catch(err => console.log("Не загружаются сохраненные карточки:", err));
   }
