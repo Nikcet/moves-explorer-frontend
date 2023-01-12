@@ -11,22 +11,16 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { registration, authorization, login, logout } from '../../utils/MainApi';
-import checkToken from '../../utils/checkToken';
+// import checkToken from '../../utils/checkToken';
 
 
 function App() {
 
   const navigate = useNavigate();
 
-  const [isLoggined, setIsLoggined] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState({ name: "", email: "" });
+  const [isLoggined, setIsLoggined] = React.useState(JSON.parse(localStorage.getItem('isLoggined')) || false);
+  const [currentUser, setCurrentUser] = React.useState(JSON.parse(localStorage.getItem('currentUser')) || { name: '', email: '' });
 
-  // Проверяет токен. Если есть и он валидный - логинится
-  React.useEffect(() => {
-    if (!checkToken()) {
-      refreshPage();
-    }
-  }, []);
 
   // Регистрация
   function handleRegister({ name, email, password }) {
@@ -49,55 +43,47 @@ function App() {
     console.log('Начало авторизации');
     authorization(email, password)
       .then(() => {
-          console.log('Авторизовался. Начинает логиниться.')
-          signIn();
+        console.log('Авторизовался. Начинает логиниться.')
+        signIn();
       })
       .catch(err => { console.log('Не авторизовался', err.message) });
-    }
-    
-    // Вход
-    function signIn() {
+  }
+
+  // Вход
+  function signIn() {
     console.log('Берет токен из localStorage');
     const token = localStorage.getItem('token');
     if (token) {
       login(token)
         .then((user) => {
           setIsLoggined(true);
-          setCurrentUser(user);
+          localStorage.setItem('isLoggined', JSON.stringify(true));
+          updateCurrentUser(user);
           console.log('Успешно залогинился');
         })
         .then(() => navigate('/movies'))
-        .catch(err => { console.log('Что-то не так с токеном: ', err.message) })
+        .catch(err => {
+          console.log('Что-то не так с токеном: ', err.message);
+          setIsLoggined(false);
+          localStorage.setItem('isLoggined', JSON.stringify(false));
+        })
     } else {
       console.log('Нет токена.');
     }
   }
 
-  // Для обновления страницы
-  function refreshPage() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      login(token)
-      .then((user) => {
-        setIsLoggined(true);
-        setCurrentUser(user);
-      })
-      .catch(err => {console.log('Что-то не так с токеном: ', err.message)})
-    } else {
-      throw new Error('Потерялся токен.');
-    }
-  }
 
   // Выход
   function signOut() {
     if (isLoggined) {
       logout()
-      .then(() => {
-        localStorage.clear();
-        setIsLoggined(false);
-        updateCurrentUser('', '');
-        console.log('Успешно разлогинился');
-        navigate('/');
+        .then(() => {
+          localStorage.clear();
+          setIsLoggined(false);
+          localStorage.setItem('isLoggined', JSON.stringify(false));
+          updateCurrentUser({name: '', email: ''});
+          console.log('Успешно разлогинился');
+          navigate('/');
         })
         .catch(err => { console.log('Не разлогинился: ', err.message) })
     } else {
@@ -106,8 +92,9 @@ function App() {
   }
 
   // Обновляет состояние текущего пользователя
-  function updateCurrentUser(name, email) {
-    setCurrentUser(name, email);
+  function updateCurrentUser(user) {
+    setCurrentUser(user);
+    localStorage.setItem('currentUser', JSON.stringify(user));
   }
 
 
