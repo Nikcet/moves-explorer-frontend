@@ -12,6 +12,7 @@ function Movies(props) {
 
   const [searchCards, setSearchCards] = React.useState([]);
   const [savedCards, setSavedCards] = React.useState([]);
+  const [isPreloader, setIsPreloader] = React.useState(true);
 
   const navigate = useNavigate();
 
@@ -25,15 +26,16 @@ function Movies(props) {
   React.useEffect(() => {
     // Если сохранены найденные карточки, отрисовать их
     console.log('Пытается найти searchedCards');
-    // setSearchCards(localStorage.getItem('searchedCards'));
     if (localStorage.getItem('searchedCards') != null) {
       returnCards();
       console.log('Нашел searchedCards');
     } else {
       console.log('Не нашел searchedCards, пошел грузить фильмы с сервера');
       // Иначе выполнить запрос к базе и получить все фильмы
+      turnOnPreloader();
       Promise.resolve(moviesApi.getMovies())
         .then(cardsList => {
+          turnOffPreloader();
           // Если в локальном хранилище еще нет найденных карточек, сохранить их туда и отрисовать
           if (!localStorage.getItem('cardsList')) {
             console.log('Зашел положить фильмы в localStorage');
@@ -65,11 +67,24 @@ function Movies(props) {
     setSearchCards(searchedCards);
   }
 
+  function turnOnPreloader() {
+    setIsPreloader(true);
+  }
+
+  function turnOffPreloader() {
+    setIsPreloader(false);
+  }
+
   return (
     <SearchCards.Provider value={searchCards}>
       <section className="movies">
-        <Search getSearchedCards={returnCards} getSavedCards={getSavedCards}/>
-        <MoviesCardList savedCards={savedCards} />
+        <Search
+          getSearchedCards={returnCards}
+          getSavedCards={getSavedCards}
+          turnOnPreloader={turnOnPreloader}
+          turnOffPreloader={turnOffPreloader}
+        />
+        <MoviesCardList savedCards={savedCards} isPreloader={isPreloader} />
       </section>
     </SearchCards.Provider>
   );

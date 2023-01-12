@@ -30,9 +30,11 @@ function Search(props) {
 
   React.useEffect(() => {
     if (!props.isSavedCards) {
+      props.turnOnPreloader();
       Promise.resolve(moviesApi.getMovies())
         .then(cardsList => {
           setCards(cardsList);
+          props.turnOffPreloader();
         })
         .catch(err =>
           console.log("Не загружаются карточки:", err.message)
@@ -49,6 +51,7 @@ function Search(props) {
 
   function searchCards(event) {
     event.preventDefault();
+    props.turnOnPreloader();
 
     let cardsToSearch = props.isSavedCards ? props.getCards() : cards;
     if (!cardsToSearch) {
@@ -90,6 +93,7 @@ function Search(props) {
     
     localStorage.setItem('searchedCards', JSON.stringify(result.filter(card => card !== undefined)));
     props.getSearchedCards();
+    props.turnOffPreloader();
   }
 
   return (

@@ -9,7 +9,6 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 
 function MoviesCardList(props) {
-  const [isPreloader, setIsPreloader] = React.useState(true);
   const [visibleCards, setVisibleCards] = React.useState([]);
   const [amountOfCards, setAmountOfCards] = React.useState(9);
 
@@ -19,14 +18,9 @@ function MoviesCardList(props) {
   const searchedCards = React.useContext(SearchCards);
   const currentUser = React.useContext(CurrentUserContext);
 
-  // Держит прелоадер, пока список карточек пустой
   React.useEffect(() => {
-    // console.log(searchedCards.length > 0)
-      if (searchedCards.length > 0) {
-        setIsPreloader(false);
-        setVisibleCards(searchedCards);
-      } else {
-      setIsPreloader(true);
+    if (searchedCards.length > 0) {
+      setVisibleCards(searchedCards);
     }
   }, [searchedCards]);
 
@@ -61,14 +55,11 @@ function MoviesCardList(props) {
     return filteredSavedCards;
   }
 
-
-  // console.log('visibleCards', visibleCards);
   if (visibleCards.length > 0) {
     return (
       <section className="movies-card-list">
-        {isPreloader ? <Preloader /> : <ul className="card-list">
+        {props.isPreloader ? <Preloader /> : <ul className="card-list">
           {visibleCards.map(item => {
-            // console.log(item);
             return (
               <MoviesCard
                 key={item.id}
@@ -78,13 +69,13 @@ function MoviesCardList(props) {
             )
           })}
         </ul>}
-        {searchedCards > visibleCards && !isPreloader && <More setNewCards={newCards} />}
+        {searchedCards > visibleCards && !props.isPreloader && <More setNewCards={newCards} />}
       </section>
     );
   } else {
     return (
       <section className="movies-card-list">
-        {isPreloader ? <Preloader /> : <p className='movies-card-list__plug'>Ничего не нашлось.</p>}
+        {props.isPreloader ? <Preloader /> : <p className='movies-card-list__plug'>Ничего не нашлось.</p>}
       </section>
     )
   }
