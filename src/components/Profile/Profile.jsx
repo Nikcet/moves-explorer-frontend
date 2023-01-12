@@ -4,7 +4,6 @@ import validator from 'validator';
 import { useContext } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import checkToken from '../../utils/checkToken';
-import { useNavigate } from 'react-router-dom';
 
 function Profile(props) {
 
@@ -15,21 +14,27 @@ function Profile(props) {
   const [isEdit, setIsEdit] = React.useState(false);
   const [isDisabled, setIsDisabled] = React.useState(true);
 
-  const navigate = useNavigate();
 
   // Проверяет токен при монтировании компонента
   React.useEffect(() => {
     if (!checkToken()) {
-      navigate('/');
+      props.signOut();
+      setNewName('');
+      setNewEmail('');
+      setIsEdit(false);
+      setIsDisabled(true);
     }
   }, []);
 
+  // Устанавливает поля по-умолчанию при монтировании
   React.useEffect(() => {
-    setNewName(currentUser.user.name);
-    setNewEmail(currentUser.user.email);
+    if (currentUser) {
+      setNewName(currentUser.user.name);
+      setNewEmail(currentUser.user.email);
+    }
   }, [])
 
-
+  // Отслеживает изменения данных в полях
   function handleChange(event) {
     const target = event.target;
     const value = target.value;
@@ -41,41 +46,67 @@ function Profile(props) {
     } else if (target.name === 'email') {
       setNewEmail(value);
     }
+
   }
 
+  // Отслеживает отправку данных
   function handleSubmit(event) {
     event.preventDefault();
 
     updateUser(newName, newEmail)
       .then(data => {
-        props.updateCurrentUser(data.name, data.email);
+        if (data) {
+          props.updateCurrentUser(data);
+        } else {
+          throw new Error('Не удалось обновить данные:');
+        }
       })
-      .catch(err => { console.log('Не удалось обновить данные: ', err) })
+      .catch(err => { console.log(err) })
   }
 
 
   function validate(input) {
-    if (!input.validity.valid) {
-      if (input.name === 'email' && !validator.isEmail(input.value)) {
-        setIsDisabled(true);
-        return {
-          name: input.name,
-          message: input.validationMessage
+    if (input.validity.valid) {
+      if (input.name === 'name') {
+        if (isCurrentUser(input.value) || input.value.length <= 0) {
+          setIsDisabled(true);
+          return {
+            name: input.name,
+            message: input.validationMessage
+          }
+        } else {
+          setIsDisabled(false);
+          return {
+            name: null,
+            message: null,
+          }
         }
-      } else {
-        setIsDisabled(true);
-        return {
-          name: input.name,
-          message: input.validationMessage
+      } else if (input.name === 'email') {
+        // Email валидатор такой же, как на бэке
+        if (isCurrentUser(input.value) || !validator.isEmail(input.value) || input.value.length <= 0) {
+          setIsDisabled(true);
+          return {
+            name: input.name,
+            message: input.validationMessage
+          }
+        } else {
+          setIsDisabled(false);
+          return {
+            name: null,
+            message: null,
+          }
         }
       }
     } else {
-      setIsDisabled(false);
       return {
-        name: null,
-        message: null
-      };
+        name: input.name,
+        message: input.validationMessage
+      }
     }
+  }
+
+  function isCurrentUser(string) {
+    return currentUser.user.name === string || currentUser.user.email === string;
   }
 
   function toggle_button() {
