@@ -11,7 +11,6 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { registration, authorization, login, logout } from '../../utils/MainApi';
-// import checkToken from '../../utils/checkToken';
 
 
 function App() {
@@ -81,7 +80,7 @@ function App() {
           localStorage.clear();
           setIsLoggined(false);
           localStorage.setItem('isLoggined', JSON.stringify(false));
-          updateCurrentUser({name: '', email: ''});
+          updateCurrentUser({ name: '', email: '' });
           console.log('Успешно разлогинился');
           navigate('/');
         })
@@ -133,8 +132,8 @@ function App() {
                   <Profile signOut={signOut} updateCurrentUser={updateCurrentUser} />
                 </> : <Navigate to='/' />
             } />}
-            {!isLoggined && <Route path='/signin' element={<Login onLogin={authorizationAndSignIn} />} />}
-            {!isLoggined && <Route path='/signup' element={<Register onRegister={handleRegister} />} />}
+            {<Route path='/signin' element={!isLoggined ? <Login onLogin={authorizationAndSignIn} /> : <Navigate to='/' />} />}
+            {<Route path='/signup' element={!isLoggined ? <Register onRegister={handleRegister} /> : <Navigate to='/' />} />}
             <Route path='*' element={<ErrorPage />} />
           </Routes>
         </div>
