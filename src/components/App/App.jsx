@@ -24,7 +24,7 @@ function App() {
   // Проверяет токен. Если есть и он валидный - логинится
   React.useEffect(() => {
     if (!checkToken()) {
-      signIn();
+      refreshPage();
     }
   }, []);
 
@@ -71,7 +71,21 @@ function App() {
     } else {
       console.log('Нет токена.');
     }
+  }
 
+  // Для обновления страницы
+  function refreshPage() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      login(token)
+      .then((user) => {
+        setIsLoggined(true);
+        setCurrentUser(user);
+      })
+      .catch(err => {console.log('Что-то не так с токеном: ', err.message)})
+    } else {
+      throw new Error('Потерялся токен.');
+    }
   }
 
   // Выход
