@@ -11,6 +11,7 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { registration, authorization, login, logout } from '../../utils/MainApi';
+import checkToken from '../../utils/checkToken';
 
 
 function App() {
@@ -20,10 +21,11 @@ function App() {
   const [isLoggined, setIsLoggined] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({ name: "", email: "" });
 
-
+  // Проверяет токен. Если есть и он валидный - логинится
   React.useEffect(() => {
-    signIn();
-    // navigate('/');
+    if (!checkToken()) {
+      signIn();
+    }
   }, []);
 
   // Регистрация
@@ -36,7 +38,6 @@ function App() {
         } else {
           throw new Error('Не удалось зарегистрироваться.');
         }
-        // navigate('/signin');
       })
       .catch(err => {
         throw new Error('Не зарегистрировался ', err.message);
@@ -48,30 +49,24 @@ function App() {
     console.log('Начало авторизации');
     authorization(email, password)
       .then(() => {
-        console.log('Берет токен из localStorage');
-        const token = localStorage.getItem('token');
-        if (token !== "undefined" && token !== undefined) {
-          console.log('Токен есть, начинает вход')
+          console.log('Авторизовался. Начинает логиниться.')
           signIn();
-          navigate('/movies');
-          console.log('Успешно авторизовался');
-        } else {
-          throw new Error('Не авторизовался ');
-        }
       })
-      .catch(err => { console.log(err.message) });
-  }
-
-  // Вход
-  function signIn() {
+      .catch(err => { console.log('Не авторизовался', err.message) });
+    }
+    
+    // Вход
+    function signIn() {
+    console.log('Берет токен из localStorage');
     const token = localStorage.getItem('token');
-    if (token != null) {
+    if (token) {
       login(token)
         .then((user) => {
-          setCurrentUser(user);
           setIsLoggined(true);
+          setCurrentUser(user);
           console.log('Успешно залогинился');
         })
+        .then(() => navigate('/movies'))
         .catch(err => { console.log('Что-то не так с токеном: ', err.message) })
     } else {
       console.log('Нет токена.');
@@ -82,13 +77,13 @@ function App() {
   // Выход
   function signOut() {
     if (isLoggined) {
-      navigate('/');
       logout()
-        .then(() => {
-          localStorage.clear();
-          setIsLoggined(false);
-          updateCurrentUser('', '');
-          console.log('Успешно разлогинился');
+      .then(() => {
+        localStorage.clear();
+        setIsLoggined(false);
+        updateCurrentUser('', '');
+        console.log('Успешно разлогинился');
+        navigate('/');
         })
         .catch(err => { console.log('Не разлогинился: ', err.message) })
     } else {
@@ -96,6 +91,7 @@ function App() {
     }
   }
 
+  // Обновляет состояние текущего пользователя
   function updateCurrentUser(name, email) {
     setCurrentUser(name, email);
   }
