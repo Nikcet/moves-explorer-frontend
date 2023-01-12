@@ -1,5 +1,4 @@
 import React from 'react';
-// import validator from 'validator';
 import validateEmail from '../../utils/validateEmail';
 import validatePassword from '../../utils/validatePassword';
 import ErrorValid from '../ErrorValid/ErrorValid';
