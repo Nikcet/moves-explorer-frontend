@@ -23,23 +23,26 @@ function Search(props) {
   }
 
   function returnSearchParams() {
+    console.log('Сохраняет параметры поиска в localStorage...')
     setSearchData(localStorage.getItem('searchData'));
     setIsShort(JSON.parse(localStorage.getItem('isShort')));
   }
 
+  function getAllMovies() {
+    props.turnOnPreloader();
+    Promise.resolve(moviesApi.getMovies())
+      .then(cardsList => {
+        setCards(cardsList);
+        props.turnOffPreloader();
+      })
+      .catch(err =>
+        console.log("Не загружаются карточки:", err.message)
+      )
+  }
+
 
   React.useEffect(() => {
-    if (!props.isSavedCards) {
-      props.turnOnPreloader();
-      Promise.resolve(moviesApi.getMovies())
-        .then(cardsList => {
-          setCards(cardsList);
-          props.turnOffPreloader();
-        })
-        .catch(err =>
-          console.log("Не загружаются карточки:", err.message)
-        )
-    }
+    getAllMovies();
   }, []);
 
   React.useEffect(() => {
@@ -52,26 +55,26 @@ function Search(props) {
   function searchCards(event) {
     event.preventDefault();
     props.turnOnPreloader();
-
-    let cardsToSearch = props.isSavedCards ? props.getCards() : cards;
-    if (!cardsToSearch) {
-      cardsToSearch = JSON.parse(localStorage.getItem('allSavedFilms'));
-    }
+    console.log('Поиск...');
 
     let result = [];
-    if (cardsToSearch) {
-      result = cardsToSearch.map((card) => {
+    if (cards) {
+      result = cards.map((card) => {
         let isSearched = false;
         Object.values(card).forEach((el) => {
-          
+
           if (typeof el === "string") {
+            if (el.length === 0) {
+              return getAllMovies();
+            }
+            
             let condition;
             if (isShort) {
               condition = el.toLowerCase().includes(searchData.toLowerCase()) && card.duration <= 40;
             } else {
               condition = el.toLowerCase().includes(searchData.toLowerCase());
             }
-  
+
             if (condition) {
               isSearched = true;
               return;
@@ -81,7 +84,7 @@ function Search(props) {
             return;
           }
         })
-  
+
         if (isSearched) {
           return card;
         }
@@ -90,7 +93,8 @@ function Search(props) {
       alert('Ничего не нашел');
       return;
     }
-    
+
+    console.log('Нашел');
     localStorage.setItem('searchedCards', JSON.stringify(result.filter(card => card !== undefined)));
     props.getSearchedCards();
     props.turnOffPreloader();
@@ -109,7 +113,6 @@ function Search(props) {
               placeholder='Фильм'
               onChange={handleChange}
               value={searchData}
-              required
             />
           </label>
           <input type='submit' value='Найти' className="search__input-submit" />
