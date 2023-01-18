@@ -16,13 +16,13 @@ function SavedMoviesCardList(props) {
       console.log('Показывает все сохраненные фильмы.')
       setVisibleCards(JSON.parse(localStorage.getItem('allSavedFilms')).slice(0, amountOfCards));
     }
-  }, []);
+  }, [props.savedCards]);
 
   React.useEffect(() => {
     if (localStorage.getItem('searchedSavedCards')) {
       console.log('Показывает найденные карточки.');
-      console.log('savedCards: ', props.savedCards);
-      setVisibleCards(JSON.parse(localStorage.getItem('searchedSavedCards')));
+      // console.log('savedCards: ', props.savedCards);
+      setVisibleCards(JSON.parse(localStorage.getItem('searchedSavedCards')).slice(0, amountOfCards));
     }
 
     // return () => localStorage.removeItem('searchedSavedCards');

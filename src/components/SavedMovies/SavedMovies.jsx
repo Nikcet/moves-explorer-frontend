@@ -23,7 +23,7 @@ function SavedMovies(props) {
 
 
   React.useEffect(() => {
-    if (savedCards.length === 0 || localStorage.getItem('allSavedFilms').length === 0) {
+    if (savedCards.length === 0 || localStorage.getItem('allSavedFilms') === null) {
       getCards();
     }
   }, []);
