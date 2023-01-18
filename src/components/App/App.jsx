@@ -22,7 +22,7 @@ function App() {
 
 
   // Регистрация
-  function handleRegister({ name, email, password }) {
+  function registrationAndAuth({ name, email, password }) {
     console.log('Начало регистрации');
     registration(name, email, password)
       .then((data) => {
@@ -42,16 +42,14 @@ function App() {
   function authorizationAndSignIn({ email, password }) {
     console.log('Начало авторизации');
     authorization(email, password)
-      .then((data) => {
-        // console.log(data)
-        // if (data !== undefined) {
+      .then(() => {
         console.log('Авторизовался. Начинает логиниться.')
         signIn();
-        // } else {
-        //   throw new Error('Не авторизовался');
-        // }
       })
-      .catch(err => { console.log(err.message) });
+      .catch(err => { 
+        console.log(err.message);
+        alert(err);
+       });
   }
 
   // Вход
@@ -144,7 +142,7 @@ function App() {
                 </> : <Navigate to='/' />
             } />}
             {<Route path='/signin' element={!isLoggined ? <Login onLogin={authorizationAndSignIn} /> : <Navigate to='/' />} />}
-            {<Route path='/signup' element={!isLoggined ? <Register onRegister={handleRegister} /> : <Navigate to='/' />} />}
+            {<Route path='/signup' element={!isLoggined ? <Register onRegister={registrationAndAuth} /> : <Navigate to='/' />} />}
             <Route path='*' element={<ErrorPage />} />
           </Routes>
         </div>
