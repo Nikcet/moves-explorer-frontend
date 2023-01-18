@@ -39,7 +39,8 @@ function Movies(props) {
           // Если в локальном хранилище еще нет найденных карточек, сохранить их туда и отрисовать
           if (!localStorage.getItem('cardsList')) {
             console.log('Зашел положить фильмы в localStorage');
-            return localStorage.setItem('cardsList', JSON.stringify(cardsList));
+            localStorage.setItem('cardsList', JSON.stringify(cardsList));
+            return setSearchCards(cardsList);
           } else {
             // Иначе взять их из локального хранилища
             console.log('Зашел брать фильмы из localStorage');
