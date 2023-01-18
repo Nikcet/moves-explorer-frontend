@@ -108,7 +108,7 @@ function Register(props) {
             onChange={handleChange}
             value={password}
             required
-            minLength="6"
+            minLength="8"
             maxLength="40"
           />
           {valid.name === 'password' && <ErrorValid error={valid} />}
