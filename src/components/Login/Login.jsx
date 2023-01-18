@@ -16,31 +16,41 @@ function Login(props) {
   const [emailIsValid, setEmailIsValid] = React.useState(false);
   const [passwordIsValid, setPasswordIsValid] = React.useState(false);
 
+  React.useEffect(() => {
+    if (email) {
+      console.log('Проверяет email');
+      setEmailIsValid(validateEmail(email));
+    }
+  }, [email]);
+
+  React.useEffect(() => {
+    if (password) {
+      console.log('Проверяет пароль');
+      setPasswordIsValid(validatePassword(password));
+    }
+  }, [password]);
+
+  React.useEffect(() => {
+    setValid({
+      name:'',
+      message: '',
+      isDisabled: !(emailIsValid && passwordIsValid),
+    });
+  }, [emailIsValid, passwordIsValid]);
 
   function handleChange(event) {
     const target = event.target;
     const value = target.value;
 
-    if (target.name === "email") {
+    target.id === 'email-input' ? setEmail(value) : setPassword(value);
 
-      setEmailIsValid(() => validateEmail(target));
-    } else if (target.name === "password") {
-      setPasswordIsValid(() => validatePassword(target));
-    }
-    setValidity(() => {
-      return {
-        name: target.name,
-        message: target.validationMessage,
-        isDisabled: !(emailIsValid && passwordIsValid),
-      }
+    setValid({
+      name: target.name,
+      message: target.validationMessage,
+      isDisabled: !(emailIsValid && passwordIsValid),
     });
-
-    target.id === 'email-input' ? setEmail(() => value) : setPassword(() => value);
   }
 
-  function setValidity(obj) {
-    setValid(obj);
-  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -50,7 +60,8 @@ function Login(props) {
         password,
       });
     } else {
-      console.log('Вы ввели некорретные данные.')
+      console.log('Вы ввели некорретные данные.');
+      alert('Вы ввели некорретные данные.');
     }
   }
 

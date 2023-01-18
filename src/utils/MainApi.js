@@ -27,10 +27,12 @@ export const authorization = (email, password) => {
             body: JSON.stringify({ email, password })
         }
     )
-        .then(res => onResponse(res))
+        .then(res => res.json())
         .then(res => {
             if (res.token) {
                 localStorage.setItem('token', res.token);
+            } else {
+                throw new Error(res.message);
             }
         })
 }

@@ -17,41 +17,42 @@ function Register(props) {
     isDisabled: true,
   });
 
-  function setValidity(obj) {
-    setValid(obj);
-  }
+  React.useEffect(() => {
+    if (email) {
+      console.log('Проверяет email');
+      setEmailIsValid(validateEmail(email));
+    }
+  }, [email]);
+
+  React.useEffect(() => {
+    if (password) {
+      console.log('Проверяет пароль');
+      setPasswordIsValid(validatePassword(password));
+    }
+  }, [password]);
+
+  React.useEffect(() => {
+    setValid({
+      name:'',
+      message: '',
+      isDisabled: !(emailIsValid && passwordIsValid),
+    });
+  }, [emailIsValid, passwordIsValid]);
 
   function handleChange(event) {
     const target = event.target;
     const value = target.value;
 
-    if (target.name === "email") {
-      setEmailIsValid(validateEmail(target));
-    } else if (target.name === "password") {
-      setPasswordIsValid(validatePassword(target));
-    }
+    if (target.id === 'name-input') setName(value)
+    else if (target.id === 'email-input') setEmail(value)
+    else if (target.id === 'password-input') setPassword(value)
     
-    setValidity({
+    setValid({
       name: target.name,
       message: target.validationMessage,
       isDisabled: !(emailIsValid && passwordIsValid),
     });
 
-    switch (target.id) {
-      case 'name-input':
-        setName(value);
-        break;
-      case 'email-input':
-        setEmail(value);
-        break;
-      case 'password-input':
-        setPassword(value);
-        break;
-      default:
-        break;
-      }
-
-      // console.log(valid);
   }
 
   function handleSubmit(event) {
