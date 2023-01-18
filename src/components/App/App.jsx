@@ -23,6 +23,7 @@ function App() {
 
   // Регистрация
   function handleRegister({ name, email, password }) {
+    console.log('Начало регистрации');
     registration(name, email, password)
       .then((data) => {
         if (data) {
@@ -41,11 +42,16 @@ function App() {
   function authorizationAndSignIn({ email, password }) {
     console.log('Начало авторизации');
     authorization(email, password)
-      .then(() => {
+      .then((data) => {
+        // console.log(data)
+        // if (data !== undefined) {
         console.log('Авторизовался. Начинает логиниться.')
         signIn();
+        // } else {
+        //   throw new Error('Не авторизовался');
+        // }
       })
-      .catch(err => { console.log('Не авторизовался', err.message) });
+      .catch(err => { console.log(err.message) });
   }
 
   // Вход
@@ -74,17 +80,22 @@ function App() {
 
   // Выход
   function signOut() {
+    console.log('Выход...');
     if (isLoggined) {
       logout()
-        .then(() => {
-          localStorage.clear();
-          setIsLoggined(false);
-          localStorage.setItem('isLoggined', JSON.stringify(false));
-          updateCurrentUser({ name: '', email: '' });
-          console.log('Успешно разлогинился');
-          navigate('/');
+        .then((data) => {
+          if (data) {
+            localStorage.clear();
+            setIsLoggined(false);
+            localStorage.setItem('isLoggined', JSON.stringify(false));
+            updateCurrentUser({ name: '', email: '' });
+            console.log('Успешно разлогинился');
+            navigate('/');
+          } else {
+            throw new Error('Не разлогинился');
+          }
         })
-        .catch(err => { console.log('Не разлогинился: ', err.message) })
+        .catch(err => { console.log(err.message) })
     } else {
       console.log('Уже разлогинен.');
     }
