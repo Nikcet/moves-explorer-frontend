@@ -79,7 +79,7 @@ function MoviesCardList(props) {
   } else {
     return (
       <section className="movies-card-list">
-        {props.isPreloader ? <Preloader /> : <p className='movies-card-list__plug'>Ничего не нашлось.</p>}
+        {props.isPreloader && searchedCards.length === 0 ? <Preloader /> : <p className='movies-card-list__plug'>Ничего не нашлось.</p>}
       </section>
     )
   }

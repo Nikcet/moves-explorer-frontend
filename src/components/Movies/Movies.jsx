@@ -35,7 +35,6 @@ function Movies(props) {
       turnOnPreloader();
       Promise.resolve(moviesApi.getMovies())
         .then(cardsList => {
-          turnOffPreloader();
           // Если в локальном хранилище еще нет найденных карточек, сохранить их туда и отрисовать
           if (!localStorage.getItem('cardsList')) {
             console.log('Зашел положить фильмы в localStorage');
@@ -87,7 +86,12 @@ function Movies(props) {
           turnOnPreloader={turnOnPreloader}
           turnOffPreloader={turnOffPreloader}
         />
-        <MoviesCardList savedCards={savedCards} isPreloader={isPreloader} />
+        <MoviesCardList
+          savedCards={savedCards}
+          isPreloader={isPreloader}
+          turnOnPreloader={turnOnPreloader}
+          turnOffPreloader={turnOffPreloader}
+        />
       </section>
     </SearchCards.Provider>
   );
