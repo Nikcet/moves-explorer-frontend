@@ -1,15 +1,14 @@
 import React from 'react';
-import Search from '../SearchForm/Search';
+import SearchSavedFilms from '../SearchForm/SearchSavedFilms';
 import SavedMoviesCardList from '../SavedMoviesCardList.jsx/SavedMoviesCardList';
-import { SearchSavedCards } from '../../contexts/SearchSavedCards';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { getSavedMovies, deleteMovie } from '../../utils/MainApi';
 import checkToken from '../../utils/checkToken';
 import { useNavigate } from 'react-router-dom';
 
 function SavedMovies(props) {
-
   const [savedCards, setSavedCards] = React.useState([]);
+  const [isPreloader, setIsPreloader] = React.useState(true);
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -24,21 +23,25 @@ function SavedMovies(props) {
 
 
   React.useEffect(() => {
-    getCards();
+    if (savedCards.length === 0 || localStorage.getItem('allSavedFilms').length === 0) {
+      getCards();
+    }
   }, []);
 
   // Получает сохраненные карточки
   function getCards() {
-    console.log('getCards')
+    console.log('Получает сохраненные карточки...');
+    setIsPreloader(true);
     let allSavedFilms = [];
     getSavedMovies()
-    .then(cards => {
-      allSavedFilms = cards.movies.filter(movie => movie.owner === currentUser.user._id);
-      localStorage.setItem('allSavedFilms', JSON.stringify(allSavedFilms));
-      setSavedCards(allSavedFilms);
-      // console.log('savedCardsVar', savedCardsVar);
-    })
-    .catch(err => console.log(err));
+      .then(cards => {
+        allSavedFilms = cards.movies.filter(movie => movie.owner === currentUser.user._id);
+        localStorage.setItem('allSavedFilms', JSON.stringify(allSavedFilms));
+        setSavedCards(allSavedFilms);
+        setIsPreloader(false);
+        console.log('Сохранил фильмы в состояние и localStorage');
+      })
+      .catch(err => console.log(err));
   }
 
   function deleteCard(movieId) {
@@ -46,19 +49,29 @@ function SavedMovies(props) {
     getCards();
   }
 
-  function returnCards() {
-    console.log('returnCards');
-    setSavedCards(JSON.parse(localStorage.getItem('searchedCards')));
+  function getSearchedCards() {
+    console.log('Кладет найденные сохраненные фильмы в состояние');
+    setSavedCards(JSON.parse(localStorage.getItem('searchedSavedCards')));
   }
 
-  console.log('savedCards', savedCards);
+  function turnOnPreloader() {
+    setIsPreloader(true);
+  }
+
+  function turnOffPreloader() {
+    setIsPreloader(false);
+  }
+
   return (
-    <SearchSavedCards.Provider value={savedCards} >
-      <section className="movies">
-        <Search isSavedCards={true} getCards={getCards} getSearchedCards={returnCards}/>
-        <SavedMoviesCardList onDeleteCard={deleteCard} />
-      </section>
-    </SearchSavedCards.Provider>
+    <section className="movies">
+      <SearchSavedFilms
+        getCards={getCards}
+        getSearchedCards={getSearchedCards}
+        turnOnPreloader={turnOnPreloader}
+        turnOffPreloader={turnOffPreloader}
+      />
+      <SavedMoviesCardList onDeleteCard={deleteCard} isPreloader={isPreloader} savedCards={savedCards} />
+    </section>
   );
 }
 
