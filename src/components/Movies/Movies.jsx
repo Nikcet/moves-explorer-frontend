@@ -46,9 +46,10 @@ function Movies(props) {
             return setSearchCards(JSON.parse(localStorage.getItem('cardsList')));
           }
         })
-        .catch(err =>
+        .catch((err) => {
           console.log("Не загружаются карточки:", err)
-        );
+          alert("Не загружаются карточки.");
+        });
     }
 
     return getSavedCards();
@@ -61,7 +62,10 @@ function Movies(props) {
         setSavedCards(cards);
         turnOffPreloader();
       })
-      .catch(err => console.log("Не загружаются сохраненные карточки:", err));
+      .catch(err => {
+        console.log("Не загружаются сохраненные карточки:", err);
+        alert('Не загружаются сохраненные карточки');
+      });
   }
 
   function returnCards() {
