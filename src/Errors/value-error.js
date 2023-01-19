@@ -6,4 +6,4 @@ class ValueError extends Error {
   }
 }
 
-module.exports = ValueError;
+export default ValueError;
