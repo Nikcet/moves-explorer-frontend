@@ -35,13 +35,16 @@ function SavedMovies(props) {
     let allSavedFilms = [];
     getSavedMovies()
       .then(cards => {
-        allSavedFilms = cards.movies.filter(movie => movie.owner === currentUser.user._id);
+        allSavedFilms = cards.movies.filter(movie => movie.owner === currentUser._id);
         localStorage.setItem('allSavedFilms', JSON.stringify(allSavedFilms));
         setSavedCards(allSavedFilms);
         setIsPreloader(false);
         console.log('Сохранил фильмы в состояние и localStorage');
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        alert(err.message);
+      });
   }
 
   function updateCards() {
@@ -49,12 +52,15 @@ function SavedMovies(props) {
     let allSavedFilms = [];
     getSavedMovies()
       .then(cards => {
-        allSavedFilms = cards.movies.filter(movie => movie.owner === currentUser.user._id);
+        allSavedFilms = cards.movies.filter(movie => movie.owner === currentUser._id);
         localStorage.setItem('allSavedFilms', JSON.stringify(allSavedFilms));
         setSavedCards(allSavedFilms);
         console.log('Сохранил фильмы в состояние и localStorage');
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        alert(err.message);
+      });
   }
 
   function deleteCard(movieId) {
@@ -67,7 +73,10 @@ function SavedMovies(props) {
         throw new Error('Не удалось удалить карточку.')
       }
     })
-    .catch((err) => console.log(err.message))
+    .catch((err) => {
+      console.log(err);
+      alert(err.message);
+    })
   }
 
   function getSearchedCards() {

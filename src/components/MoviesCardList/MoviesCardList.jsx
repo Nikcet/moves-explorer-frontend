@@ -52,7 +52,7 @@ function MoviesCardList(props) {
   function checkCardFilmForSave(collection, element) {
     let filteredSavedCards;
     try {
-      filteredSavedCards = collection.some((current) => current.nameRU === element.nameRU && current.owner === currentUser.user._id);
+      filteredSavedCards = collection.some((current) => current.nameRU === element.nameRU && current.owner === currentUser._id);
     } catch (err) {
       filteredSavedCards = false;
     }

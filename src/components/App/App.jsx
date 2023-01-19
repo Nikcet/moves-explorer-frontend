@@ -27,7 +27,6 @@ function App() {
     registration(name, email, password)
       .then((data) => {
         if (data) {
-          console.log('data: ', data);
           if (data.status === 200) {
             console.log('Успешно зарегистрировался');
             authorizationAndSignIn({ email: data.email, password: password });
@@ -39,7 +38,7 @@ function App() {
         }
       })
       .catch(err => {
-        console.log(err.message);
+        console.log(err);
         alert(err.message);
       })
   }
@@ -53,9 +52,9 @@ function App() {
         signIn();
       })
       .catch(err => {
-        console.log(err.message);
+        console.log(err);
         alert(err.message);
-       });
+      });
   }
 
   // Вход
@@ -79,6 +78,7 @@ function App() {
         })
     } else {
       console.log('Нет токена.');
+      alert('Нет токена.');
     }
   }
 
@@ -100,9 +100,13 @@ function App() {
             throw new Error('Не разлогинился');
           }
         })
-        .catch(err => { console.log(err.message) })
+        .catch(err => {
+          console.log(err.message);
+          alert(err.message);
+        })
     } else {
       console.log('Уже разлогинен.');
+      alert('Уже разлогинен.');
     }
   }
 
