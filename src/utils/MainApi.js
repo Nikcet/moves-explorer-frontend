@@ -81,8 +81,7 @@ export const login = (jwtToken) => {
             if (res.status === 401) {
                 throw new AuthError('Вы ввели неправильный логин или пароль.');
             } else {
-                res.status = 200;
-                return res;
+                return res.user;
             }
         })
 }
