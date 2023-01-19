@@ -19,20 +19,18 @@ function Profile(props) {
   React.useEffect(() => {
     if (!checkToken()) {
       props.signOut();
-      setNewName('');
-      setNewEmail('');
       setIsEdit(false);
       setIsDisabled(true);
     }
   }, []);
 
-  // Устанавливает поля по-умолчанию при монтировании
+  // Устанавливает новое текущее имя, если старое изменилось
   React.useEffect(() => {
     if (currentUser) {
-      setNewName(currentUser.user.name);
-      setNewEmail(currentUser.user.email);
+      setNewName(currentUser.name);
+      setNewEmail(currentUser.email);
     }
-  }, [])
+  }, [currentUser])
 
   // Отслеживает изменения данных в полях
   function handleChange(event) {
@@ -46,17 +44,18 @@ function Profile(props) {
     } else if (target.name === 'email') {
       setNewEmail(value);
     }
-
   }
 
   // Отслеживает отправку данных
   function handleSubmit(event) {
     event.preventDefault();
-
+    
     updateUser(newName, newEmail)
-      .then(data => {
+      .then((data) => {
         if (data) {
           props.updateCurrentUser(data);
+          toggleButton();
+          alert('Имя успешно изменено.');
         } else {
           throw new Error('Не удалось обновить данные:');
         }
@@ -106,18 +105,18 @@ function Profile(props) {
   }
 
   function isCurrentUser(string) {
-    return currentUser.user.name === string || currentUser.user.email === string;
+    return currentUser.name === string || currentUser.email === string;
   }
 
-  function toggle_button() {
+  function toggleButton() {
     setIsEdit(!isEdit);
   }
 
   return (
     <section className="profile">
       <div className="profile__content">
-        <h3 className="profile__greet">{`Привет, ${currentUser.user.name}!`}</h3>
-        <form className="profile__form" onSubmit={handleSubmit}>
+        <h3 className="profile__greet">{`Привет, ${currentUser.name}!`}</h3>
+        <form id="profile_form" className="profile__form" onSubmit={handleSubmit}>
           <label className="profile__row profile__name">
             <p className="profile__name-label profile__label">Имя</p>
             <input className="profile__input profile__name-input"
@@ -143,11 +142,12 @@ function Profile(props) {
 
           {
             !isEdit ? <div className="profile__buttons">
-              <input type="submit" value="Редактировать" className="profile__btn profile__edit-btn" onClick={toggle_button} />
+              <input type="button" value="Редактировать" className="profile__btn profile__edit-btn" onClick={toggleButton} />
               <input type="button" value="Выйти из аккаунта" className="profile__btn profile__exit-btn" onClick={props.signOut} />
             </div> :
-              <div className="register__buttons">
-                <button type="submit" className='register__submit-btn' disabled={isDisabled} onClick={toggle_button}>Сохранить</button>
+              <div className="profile__buttons">
+                <button type="submit" form='profile_form' className='register__submit-btn' disabled={isDisabled} onClick={handleSubmit}>Сохранить</button>
+                <button type="button" form='profile_form' className='register__cancel-btn' onClick={toggleButton}>Отменить</button>
               </div>
           }
         </form>
