@@ -1,0 +1,9 @@
+.register__logo-link {
+  display: block;
+  margin-bottom: 40px;
+  width: min-content;
+}
+
+.register__logo-link:hover {
+  opacity: .7;
+}

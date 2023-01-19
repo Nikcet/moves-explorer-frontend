@@ -33,7 +33,7 @@ function Register(props) {
 
   React.useEffect(() => {
     setValid({
-      name:'',
+      name: '',
       message: '',
       isDisabled: !(emailIsValid && passwordIsValid),
     });
@@ -46,7 +46,7 @@ function Register(props) {
     if (target.id === 'name-input') setName(value)
     else if (target.id === 'email-input') setEmail(value)
     else if (target.id === 'password-input') setPassword(value)
-    
+
     setValid({
       name: target.name,
       message: target.validationMessage,
@@ -70,7 +70,9 @@ function Register(props) {
     <section className="register">
       <div className="register__content">
         <div className="register__greet">
-          <img src={logo} alt='Логиотип' className="register__logo" />
+          <Link to='/' className='register__logo-link'>
+            <img src={logo} alt='Логотип' className='register__logo' />
+          </Link>
           <h2 className="register__greeting">Добро пожаловать!</h2>
         </div>
         <form className="register__form" onSubmit={handleSubmit} name='register'>
