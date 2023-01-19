@@ -50,7 +50,7 @@ function MoviesCard(props) {
       </div>
       }
       {
-        props.card.owner === currentUser.user._id && <div className="card__delete-widget">
+        props.card.owner === currentUser._id && <div className="card__delete-widget">
           <button className="card__delete-button" type="button" onClick={deleteCardFilm} disabled={isDisabled}>
             <div className="card__delete-icon-circle">
               <img src={deleteIcon} alt="Иконка: удалить" className="card__delete-icon" />
