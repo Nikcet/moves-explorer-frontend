@@ -44,9 +44,30 @@ function SavedMovies(props) {
       .catch(err => console.log(err));
   }
 
+  function updateCards() {
+    console.log('Обновляет список фильмов...');
+    let allSavedFilms = [];
+    getSavedMovies()
+      .then(cards => {
+        allSavedFilms = cards.movies.filter(movie => movie.owner === currentUser.user._id);
+        localStorage.setItem('allSavedFilms', JSON.stringify(allSavedFilms));
+        setSavedCards(allSavedFilms);
+        console.log('Сохранил фильмы в состояние и localStorage');
+      })
+      .catch(err => console.log(err));
+  }
+
   function deleteCard(movieId) {
-    deleteMovie(movieId);
-    getCards();
+    console.log('Удаляет фильм...')
+    deleteMovie(movieId)
+    .then((data) => {
+      if (data) {
+        updateCards();
+      } else {
+        throw new Error('Не удалось удалить карточку.')
+      }
+    })
+    .catch((err) => console.log(err.message))
   }
 
   function getSearchedCards() {

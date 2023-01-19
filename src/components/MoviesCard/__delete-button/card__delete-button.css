@@ -19,3 +19,8 @@
   opacity: .7;
   cursor: pointer;
 }
+
+.card__delete-button:disabled {
+  opacity: .0;
+  cursor: default;
+}

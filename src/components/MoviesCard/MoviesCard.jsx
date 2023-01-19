@@ -8,6 +8,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 function MoviesCard(props) {
   const [isSave, setIsSave] = React.useState(false);
   const [image, setImage] = React.useState('');
+  const [isDisabled, setIsDisabled] = React.useState(false);
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -20,6 +21,7 @@ function MoviesCard(props) {
   }, [])
 
   function deleteCardFilm() {
+    setIsDisabled(true);
     props.onDeleteCard(props.card._id);
   }
 
@@ -49,7 +51,7 @@ function MoviesCard(props) {
       }
       {
         props.card.owner === currentUser.user._id && <div className="card__delete-widget">
-          <button className="card__delete-button" type="button" onClick={deleteCardFilm}>
+          <button className="card__delete-button" type="button" onClick={deleteCardFilm} disabled={isDisabled}>
             <div className="card__delete-icon-circle">
               <img src={deleteIcon} alt="Иконка: удалить" className="card__delete-icon" />
             </div>
