@@ -27,14 +27,20 @@ function App() {
     registration(name, email, password)
       .then((data) => {
         if (data) {
-          console.log('Успешно зарегистрировался');
-          authorizationAndSignIn({ email: email, password: password });
+          console.log('data: ', data);
+          if (data.status === 200) {
+            console.log('Успешно зарегистрировался');
+            authorizationAndSignIn({ email: data.email, password: password });
+          } else {
+            alert(data.message);
+          }
         } else {
           throw new Error('Не удалось зарегистрироваться.');
         }
       })
       .catch(err => {
-        throw new Error('Не зарегистрировался ', err.message);
+        console.log(err.message);
+        alert(err.message);
       })
   }
 
@@ -46,9 +52,9 @@ function App() {
         console.log('Авторизовался. Начинает логиниться.')
         signIn();
       })
-      .catch(err => { 
+      .catch(err => {
         console.log(err.message);
-        alert(err);
+        alert(err.message);
        });
   }
 
@@ -69,6 +75,7 @@ function App() {
           console.log('Что-то не так с токеном: ', err.message);
           setIsLoggined(false);
           localStorage.setItem('isLoggined', JSON.stringify(false));
+          alert(err.message);
         })
     } else {
       console.log('Нет токена.');

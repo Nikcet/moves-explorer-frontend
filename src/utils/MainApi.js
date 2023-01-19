@@ -1,7 +1,14 @@
 import { mainApiUrl, moviesApiUrl, localUrl, imageStorageUrl } from './config';
+import BadRequestError from '../Errors/bad-request-error';
+import AuthError from '../Errors/authorization-error';
+import ValueError from '../Errors/value-error';
 
 function onResponse(res) {
-    return res.ok ? res.json() : new Error(res.statusText);
+    if (res.ok) {
+        return res.json();
+    } else {
+        return res;
+    }
 }
 
 export const registration = (name, email, password) => {
@@ -15,6 +22,17 @@ export const registration = (name, email, password) => {
         }
     )
         .then(res => onResponse(res))
+        .then((res) => {
+            if (res.status === 409) {
+                throw new BadRequestError('Пользователь с таким email уже существует.');
+            } else if (res.status === 400) {
+                throw new ValueError('При регистрации пользователя произошла ошибка.');
+            }
+            else {
+                res.status = 200;
+                return res;
+            }
+        })
 }
 
 export const authorization = (email, password) => {
@@ -27,13 +45,21 @@ export const authorization = (email, password) => {
             body: JSON.stringify({ email, password })
         }
     )
-        .then(res => res.json())
         .then(res => {
+            if (res.status === 401) {
+                throw new AuthError('Вы ввели неправильный логин или пароль.');
+            }
+            return res.json()
+        })
+        .then(res => {
+            res.status = 200;
             if (res.token) {
                 localStorage.setItem('token', res.token);
             } else {
-                throw new Error(res.message);
+                throw new AuthError('При авторизации произошла ошибка. Переданный токен некорректен.');
             }
+            return res;
+
         })
 }
 
@@ -51,6 +77,14 @@ export const login = (jwtToken) => {
         }
     )
         .then(res => onResponse(res))
+        .then(res => {
+            if (res.status === 401) {
+                throw new AuthError('Вы ввели неправильный логин или пароль.');
+            } else {
+                res.status = 200;
+                return res;
+            }
+        })
 }
 
 export const logout = () => {
