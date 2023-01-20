@@ -1,18 +1,22 @@
 import React from 'react';
-import { updateUser } from '../../utils/MainApi';
 import validator from 'validator';
 import { useContext } from 'react';
+import { updateUser } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import checkToken from '../../utils/checkToken';
+import validateEmail from '../../utils/validateEmail';
+
 
 function Profile(props) {
 
   const currentUser = useContext(CurrentUserContext);
 
-  const [newName, setNewName] = React.useState('');
-  const [newEmail, setNewEmail] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
   const [isEdit, setIsEdit] = React.useState(false);
   const [isDisabled, setIsDisabled] = React.useState(true);
+  const [emailIsValid, setEmailIsValid] = React.useState(false);
+  const [nameIsValid, setNameIsValid] = React.useState(false);
 
 
   // Проверяет токен при монтировании компонента
@@ -27,81 +31,60 @@ function Profile(props) {
   // Устанавливает новое текущее имя, если старое изменилось
   React.useEffect(() => {
     if (currentUser) {
-      setNewName(currentUser.name);
-      setNewEmail(currentUser.email);
+      setName(currentUser.name);
+      setEmail(currentUser.email);
     }
   }, [currentUser])
+
+  // Проверяет email
+  React.useEffect(() => {
+    if (email) {
+      setEmailIsValid((!isCurrentUser(email)) && validateEmail(email));
+    }
+  }, [email]);
+
+  // Проверяет имя
+  React.useEffect(() => {
+    if (name) {
+      setNameIsValid((!isCurrentUser(name)) && name.length > 0);
+    }
+  }, [name]);
+
+  // Переключает кнопку
+  React.useEffect(() => {
+    setIsDisabled(!nameIsValid && !emailIsValid);
+  }, [nameIsValid, emailIsValid])
+
 
   // Отслеживает изменения данных в полях
   function handleChange(event) {
     const target = event.target;
     const value = target.value;
 
-    validate(target);
-
-    if (target.name === 'name') {
-      setNewName(value);
-    } else if (target.name === 'email') {
-      setNewEmail(value);
-    }
+    target.name === 'name' ? setName(value) : setEmail(value);
   }
 
   // Отслеживает отправку данных
   function handleSubmit(event) {
     event.preventDefault();
-    
-    updateUser(newName, newEmail)
+
+    updateUser(name, email)
       .then((data) => {
         if (data) {
           props.updateCurrentUser(data);
           toggleButton();
           alert('Имя успешно изменено.');
         } else {
-          throw new Error('Не удалось обновить данные:');
+          props.updateCurrentUser(currentUser);
+          throw new Error('Не удалось обновить данные.');
         }
       })
-      .catch(err => { console.log(err) })
-  }
-
-
-  function validate(input) {
-    if (input.validity.valid) {
-      if (input.name === 'name') {
-        if (isCurrentUser(input.value) || input.value.length <= 0) {
-          setIsDisabled(true);
-          return {
-            name: input.name,
-            message: input.validationMessage
-          }
-        } else {
-          setIsDisabled(false);
-          return {
-            name: null,
-            message: null,
-          }
-        }
-      } else if (input.name === 'email') {
-        // Email валидатор такой же, как на бэке
-        if (isCurrentUser(input.value) || !validator.isEmail(input.value) || input.value.length <= 0) {
-          setIsDisabled(true);
-          return {
-            name: input.name,
-            message: input.validationMessage
-          }
-        } else {
-          setIsDisabled(false);
-          return {
-            name: null,
-            message: null,
-          }
-        }
-      }
-    } else {
-      return {
-        name: input.name,
-        message: input.validationMessage
-      }
-    }
+      .catch(err => {
+        console.log(err);
+        alert(err.message);
+        setName(currentUser.name);
+        setEmail(currentUser.email);
+      })
   }
 
   function isCurrentUser(string) {
@@ -123,7 +106,7 @@ function Profile(props) {
               name='name'
               type="text"
               onChange={handleChange}
-              value={newName}
+              value={name}
               minLength={2}
               readOnly={!isEdit}
             />
@@ -134,7 +117,7 @@ function Profile(props) {
               name='email'
               type="email"
               onChange={handleChange}
-              value={newEmail}
+              value={email}
               minLength={2}
               readOnly={!isEdit}
             />

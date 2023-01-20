@@ -123,7 +123,15 @@ export const updateUser = (name, email) => {
         credentials: 'include',
         body: JSON.stringify({ name, email })
     })
-        .then(res => onResponse(res))
+        .then(res => {
+            if (res.status === 400) {
+                throw new ValueError('Вы ввели неправильные данные.');
+            } else if (res.status === 409) {
+                throw new BadRequestError('Такой email использовать нельзя.')
+            } else {
+                return onResponse(res);
+            }
+        })
 }
 
 // Получает сохраненные карточки
