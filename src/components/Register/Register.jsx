@@ -11,14 +11,13 @@ function Register(props) {
   const [password, setPassword] = React.useState('');
   const [emailIsValid, setEmailIsValid] = React.useState(false);
   const [passwordIsValid, setPasswordIsValid] = React.useState(false);
-  const [isInputsDisabled, setIsInputDisabled] = React.useState(false);
 
   const [valid, setValid] = React.useState({
     name: '',
     message: '',
     isDisabled: true,
   });
-
+  
   React.useEffect(() => {
     if (email) {
       console.log('Проверяет email');
@@ -59,7 +58,6 @@ function Register(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    setIsInputDisabled(true);
     if (!valid.isDisabled) {
       props.onRegister({
         name,
@@ -90,7 +88,6 @@ function Register(props) {
             required
             minLength="2"
             maxLength="40"
-            disabled={isInputsDisabled}
           />
           {valid.name === 'name' && <ErrorValid error={valid} />}
           <label htmlFor="email-input" className="register__label">E-mail</label>
@@ -103,7 +100,6 @@ function Register(props) {
             value={email}
             required
             minLength="2"
-            disabled={isInputsDisabled}
           />
           {valid.name === 'email' && <ErrorValid error={valid} />}
           <label htmlFor="password-input" className="register__label">Пароль</label>
@@ -117,7 +113,6 @@ function Register(props) {
             required
             minLength="8"
             maxLength="40"
-            disabled={isInputsDisabled}
           />
           {valid.name === 'password' && <ErrorValid error={valid} />}
           <div className="register__buttons">

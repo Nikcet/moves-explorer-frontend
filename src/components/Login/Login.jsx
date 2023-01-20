@@ -10,7 +10,6 @@ function Login(props) {
   const [password, setPassword] = React.useState('');
   const [emailIsValid, setEmailIsValid] = React.useState(false);
   const [passwordIsValid, setPasswordIsValid] = React.useState(false);
-  const [isInputDisabled, setIsInputDisabled] = React.useState(false);
 
 
   const [valid, setValid] = React.useState({
@@ -57,7 +56,6 @@ function Login(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    setIsInputDisabled(true);
     if (emailIsValid && passwordIsValid) {
       props.onLogin({
         email,
@@ -66,7 +64,6 @@ function Login(props) {
     } else {
       console.log('Вы ввели некорретные данные.');
       alert('Вы ввели некорретные данные.');
-      setIsInputDisabled(false);
     }
   }
 
@@ -81,10 +78,10 @@ function Login(props) {
         </div>
         <form className="register__form" onSubmit={handleSubmit}>
           <label htmlFor="email-input" className="register__label">E-mail</label>
-          <input name='email' id='email-input' type="email" className="register__input" onChange={handleChange} value={email} required disabled={isInputDisabled}/>
+          <input name='email' id='email-input' type="email" className="register__input" onChange={handleChange} value={email} required />
           {valid.name === 'email' && <ErrorValid error={valid} />}
           <label htmlFor="password-input" className="register__label">Пароль</label>
-          <input name='password' id='password-input' type="password" className="register__input error-input" onChange={handleChange} value={password} minLength='8' required disabled={isInputDisabled}/>
+          <input name='password' id='password-input' type="password" className="register__input error-input" onChange={handleChange} value={password} minLength='8' required />
           {valid.name === 'password' && <ErrorValid error={valid} />}
           <div className="register__buttons">
             <button type="submit" className='register__submit-btn' disabled={valid.isDisabled}>Войти</button>
