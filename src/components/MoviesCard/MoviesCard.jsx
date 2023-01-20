@@ -10,7 +10,7 @@ function MoviesCard(props) {
   const [image, setImage] = React.useState('');
   const [isDisabled, setIsDisabled] = React.useState(false);
 
-  const currentUser = React.useContext(CurrentUserContext);
+  // const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
     if (props.card.image.url) {
@@ -20,9 +20,18 @@ function MoviesCard(props) {
     }
   }, [])
 
-  function deleteCardFilm() {
+  async function deleteCardFilm() {
     setIsDisabled(true);
-    props.onDeleteCard(props.card._id);
+    if (props.isSaved) {
+      await props.onDeleteCard(props.card._id);
+    } else {
+      const allSavedFilms = JSON.parse(localStorage.getItem('allSavedFilms'));
+      const card = allSavedFilms.find((item) => {
+        return item.movieId === props.card.id;
+      })
+      await props.onDeleteCard(card._id);
+    }
+    setIsSave(false);
   }
 
   function saveCardFilm() {
@@ -30,27 +39,32 @@ function MoviesCard(props) {
       .then((data) => {
         if (data) {
           setIsSave(true);
+          props.getSavedCards();
         } else {
           console.log('Фильм не сохранился.');
         }
       })
-      .catch((err) => { console.log(err) });
+      .catch((err) => {
+        console.log(err);
+        alert(err.message);
+      });
   }
 
 
   return (
     <li className="card">
-      {!props.isSaved && <div className="card__save-widget" >
-        {!isSave && !props.isSavedCard ? <button type="button" className='card__save-button' onClick={saveCardFilm}>Сохранить</button>
-          :
-          <div className="card__save-icon-circle">
-            <img src={icon} alt="Иконка: сохранено" className="card__save-icon" />
-          </div>
-        }
-      </div>
-      }
-      {
-        props.card.owner === currentUser._id && <div className="card__delete-widget">
+      {!props.isSaved ?
+        <div className="card__save-widget" >
+          {!isSave && !props.isSavedCard ?
+            <button type="button" className='card__save-button' onClick={saveCardFilm}>Сохранить</button>
+            :
+            <button type="button" className="card__save-icon-circle" onClick={deleteCardFilm}>
+              <img src={icon} alt="Иконка: сохранено" className="card__save-icon" />
+            </button>
+          }
+        </div>
+        :
+        <div className="card__delete-widget">
           <button className="card__delete-button" type="button" onClick={deleteCardFilm} disabled={isDisabled}>
             <div className="card__delete-icon-circle">
               <img src={deleteIcon} alt="Иконка: удалить" className="card__delete-icon" />
@@ -58,7 +72,6 @@ function MoviesCard(props) {
           </button>
         </div>
       }
-
       <a className='card__link' href={props.card.trailerLink} target="_blank" rel="noopener noreferrer">
         <img src={image} alt={`Обложка фильма: ${props.card.nameRU}`} className="card__image" />
       </a>

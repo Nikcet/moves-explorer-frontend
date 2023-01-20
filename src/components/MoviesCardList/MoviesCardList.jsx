@@ -69,6 +69,8 @@ function MoviesCardList(props) {
                 key={item.id}
                 card={item}
                 isSavedCard={checkCardFilmForSave(props.savedCards.movies, item)}
+                onDeleteCard={props.onDeleteCard}
+                getSavedCards={props.getSavedCards}
               />
             )
           })}
