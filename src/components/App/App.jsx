@@ -18,7 +18,7 @@ function App() {
   const navigate = useNavigate();
 
   const [isLoggined, setIsLoggined] = React.useState(JSON.parse(localStorage.getItem('isLoggined')) || false);
-  const [currentUser, setCurrentUser] = React.useState(JSON.parse(localStorage.getItem('currentUser')) || { name: '', email: '' });
+  const [currentUser, setCurrentUser] = React.useState(JSON.parse(localStorage.getItem('currentUser')) || { name: '', email: '' , _id: ''});
 
 
   // Регистрация
@@ -93,7 +93,7 @@ function App() {
             localStorage.clear();
             setIsLoggined(false);
             localStorage.setItem('isLoggined', JSON.stringify(false));
-            updateCurrentUser({ name: '', email: '' });
+            updateCurrentUser({ name: '', email: '' , _id: ''});
             console.log('Успешно разлогинился');
             navigate('/');
           } else {
