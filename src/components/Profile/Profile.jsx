@@ -71,7 +71,7 @@ function Profile(props) {
     updateUser(name, email)
       .then((data) => {
         if (data) {
-          props.updateCurrentUser(data);
+          props.updateCurrentUser({name: data.name, email: data.email, _id: currentUser._id});
           toggleButton();
           alert('Имя успешно изменено.');
         } else {
