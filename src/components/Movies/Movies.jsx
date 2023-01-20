@@ -79,7 +79,6 @@ function Movies(props) {
       .then(cards => {
         allSavedFilms = cards.movies.filter(movie => movie.owner === currentUser._id);
         localStorage.setItem('allSavedFilms', JSON.stringify(allSavedFilms));
-        setSavedCards(allSavedFilms);
         console.log('Сохранил фильмы в localStorage');
       })
       .catch(err => {
