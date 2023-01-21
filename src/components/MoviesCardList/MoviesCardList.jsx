@@ -48,15 +48,9 @@ function MoviesCardList(props) {
     setAmountOfCards(amountOfCards + amountOfNewCards);
   }
 
-  // Проверяет, сохранены ли каротчки в личной библиотеке
+  // Проверяет, сохранены ли карточки в личной библиотеке
   function checkCardFilmForSave(collection, element) {
-    let filteredSavedCards;
-    try {
-      filteredSavedCards = collection.some((current) => current.nameRU === element.nameRU && current.owner === currentUser._id);
-    } catch (err) {
-      filteredSavedCards = false;
-    }
-    return filteredSavedCards;
+    return collection.some((current) => current.nameRU === element.nameRU && current.owner === currentUser._id); 
   }
 
   if (visibleCards.length > 0) {
