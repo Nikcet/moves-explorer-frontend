@@ -3,14 +3,12 @@ import icon from '../../images/icon__COLOR_invisible.svg';
 import deleteIcon from '../../images/icon__COLOR_icon-main-delete.svg';
 import { postMovie } from '../../utils/MainApi';
 import { imageStorageUrl } from '../../utils/config';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function MoviesCard(props) {
   const [isSave, setIsSave] = React.useState(false);
   const [image, setImage] = React.useState('');
   const [isDisabled, setIsDisabled] = React.useState(false);
 
-  // const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
     if (props.card.image.url) {
@@ -18,20 +16,31 @@ function MoviesCard(props) {
     } else {
       setImage(props.card.image);
     }
-  }, [])
+  }, []);
+
+  React.useEffect(() => {
+    if (props.isSavedCard) {
+      setIsSave(true);
+    } else if (props.isSaved) {
+      setIsSave(true);
+    } else {
+      setIsSave(false);
+    }
+  }, [props.isSavedCard, props.isSaved]);
 
   async function deleteCardFilm() {
     setIsDisabled(true);
     if (props.isSaved) {
       await props.onDeleteCard(props.card._id);
+      setIsSave(false);
     } else {
       const allSavedFilms = JSON.parse(localStorage.getItem('allSavedFilms'));
       const card = allSavedFilms.find((item) => {
         return item.movieId === props.card.id;
       })
-      await props.onDeleteCard(card._id);
+      props.onDeleteCard(card._id);
+      setIsSave(false);
     }
-    setIsSave(false);
   }
 
   function saveCardFilm() {
@@ -55,7 +64,7 @@ function MoviesCard(props) {
     <li className="card">
       {!props.isSaved ?
         <div className="card__save-widget" >
-          {!isSave && !props.isSavedCard ?
+          {!isSave ?
             <button type="button" className='card__save-button' onClick={saveCardFilm}>Сохранить</button>
             :
             <button type="button" className="card__save-icon-circle" onClick={deleteCardFilm}>
