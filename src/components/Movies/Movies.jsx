@@ -61,10 +61,14 @@ function Movies(props) {
 
   function getSavedCards() {
     turnOnPreloader();
+    let allSavedFilms = [];
     getSavedMovies()
       .then((cards) => {
+        allSavedFilms = cards.movies.filter(movie => movie.owner === currentUser._id);
+        localStorage.setItem('allSavedFilms', JSON.stringify(allSavedFilms));
         setSavedCards(cards);
         turnOffPreloader();
+        console.log('Сохранил фильмы в localStorage');
       })
       .catch(err => {
         console.log("Не загружаются сохраненные карточки:", err);
