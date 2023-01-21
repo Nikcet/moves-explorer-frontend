@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function ErrorPage(props) {
-  const history = useNavigate();
+  const navigate = useNavigate();
   
   return (
     <section className="error">
@@ -10,7 +10,7 @@ function ErrorPage(props) {
         <h1 className="error__title">404</h1>
         <h2 className="error__subtitle">Страница не найдена</h2>
       </div>
-      <button className="error__history-back" onClick={() => history('/')}>Назад</button>
+      <button className="error__history-back" onClick={() => navigate('/')}>Назад</button>
     </section>
   );
 }
