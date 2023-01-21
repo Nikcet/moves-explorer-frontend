@@ -65,6 +65,7 @@ function MoviesCardList(props) {
                 isSavedCard={checkCardFilmForSave(props.savedCards.movies, item)}
                 onDeleteCard={props.onDeleteCard}
                 getSavedCards={props.getSavedCards}
+                isLoggined={props.isLoggined}
               />
             )
           })}

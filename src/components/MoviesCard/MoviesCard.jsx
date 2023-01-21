@@ -62,25 +62,28 @@ function MoviesCard(props) {
 
   return (
     <li className="card">
-      {!props.isSaved ?
-        <div className="card__save-widget" >
-          {!isSave ?
-            <button type="button" className='card__save-button' onClick={saveCardFilm}>Сохранить</button>
-            :
-            <button type="button" className="card__save-icon-circle" onClick={deleteCardFilm}>
-              <img src={icon} alt="Иконка: сохранено" className="card__save-icon" />
+      {props.isLoggined && <>
+        {!props.isSaved ?
+          <div className="card__save-widget" >
+            {!isSave ?
+              <button type="button" className='card__save-button' onClick={saveCardFilm}>Сохранить</button>
+              :
+              <button type="button" className="card__save-icon-circle" onClick={deleteCardFilm}>
+                <img src={icon} alt="Иконка: сохранено" className="card__save-icon" />
+              </button>
+            }
+          </div>
+          :
+          <div className="card__delete-widget">
+            <button className="card__delete-button" type="button" onClick={deleteCardFilm} disabled={isDisabled}>
+              <div className="card__delete-icon-circle">
+                <img src={deleteIcon} alt="Иконка: удалить" className="card__delete-icon" />
+              </div>
             </button>
-          }
-        </div>
-        :
-        <div className="card__delete-widget">
-          <button className="card__delete-button" type="button" onClick={deleteCardFilm} disabled={isDisabled}>
-            <div className="card__delete-icon-circle">
-              <img src={deleteIcon} alt="Иконка: удалить" className="card__delete-icon" />
-            </div>
-          </button>
-        </div>
-      }
+          </div>
+        }
+      </>}
+
       <a className='card__link' href={props.card.trailerLink} target="_blank" rel="noopener noreferrer">
         <img src={image} alt={`Обложка фильма: ${props.card.nameRU}`} className="card__image" />
       </a>

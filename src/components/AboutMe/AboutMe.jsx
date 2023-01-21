@@ -14,9 +14,8 @@ function AboutMe(props) {
           <div className="aboutme__description">
             <h3 className="aboutme__student-name">Мстислав</h3>
             <h4 className="aboutme__student-profession">Фронтенд-разработчик, 26 лет</h4>
-            <p className="aboutme__student-description">Я родился и живу в Саратове, закончил факультет экономики СГУ. У меня есть жена
-              и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить. С 2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.</p>
-            <a href="#/" className="aboutme__link">GitHub</a>
+            <p className="aboutme__student-description">Живу в Краснодаре. Есть семья. Закончил КубГУ. Бакалавриат - Радиотехника; Магистратура - Информационные системы. Интересует инженерное дело в целом. Планирую быть не только Frontend-разрабом. Миссия по жизни - созидать, созидать, и еще раз созидать.</p>
+            <a href="https://github.com/Nikcet" target="_blank" rel="noreferrer" className="aboutme__link">GitHub</a>
           </div>
           <div className="aboutme__avatar">
             <img src={photo} alt="Фото" className="aboutme__image" />

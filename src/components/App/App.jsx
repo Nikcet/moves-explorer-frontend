@@ -18,7 +18,7 @@ function App() {
   const navigate = useNavigate();
 
   const [isLoggined, setIsLoggined] = React.useState(JSON.parse(localStorage.getItem('isLoggined')) || false);
-  const [currentUser, setCurrentUser] = React.useState(JSON.parse(localStorage.getItem('currentUser')) || { name: '', email: '' , _id: ''});
+  const [currentUser, setCurrentUser] = React.useState(JSON.parse(localStorage.getItem('currentUser')) || { name: '', email: '', _id: '' });
 
 
   // Регистрация
@@ -93,7 +93,7 @@ function App() {
             localStorage.clear();
             setIsLoggined(false);
             localStorage.setItem('isLoggined', JSON.stringify(false));
-            updateCurrentUser({ name: '', email: '' , _id: ''});
+            updateCurrentUser({ name: '', email: '', _id: '' });
             console.log('Успешно разлогинился');
             navigate('/');
           } else {
@@ -122,20 +122,20 @@ function App() {
       <div className="App">
         <div className="page">
           <Routes>
-            <Route path='/' element={
-              <>
-                <Header isLoggined={isLoggined} />
-                <Main />
-                <Footer />
-              </>
-            } />
-            {<Route path='/movies' element={
+            {<Route path='/' element={
               isLoggined ?
                 <>
                   <Header isLoggined={isLoggined} />
-                  <Movies />
+                  <Main />
                   <Footer />
-                </> : <Navigate to='/' />
+                </> : <Navigate to='/movies' />
+            } />}
+            {<Route path='/movies' element={
+              <>
+                <Header isLoggined={isLoggined} />
+                <Movies isLoggined={isLoggined}/>
+                <Footer />
+              </>
             } />}
             {<Route path='/saved-movies' element={
               isLoggined ?

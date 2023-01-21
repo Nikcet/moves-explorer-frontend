@@ -134,6 +134,7 @@ function Movies(props) {
           turnOffPreloader={turnOffPreloader}
           getSavedCards={updateCards}
           onDeleteCard={deleteCard}
+          isLoggined={props.isLoggined}
         />
       </section>
     </SearchCards.Provider>
