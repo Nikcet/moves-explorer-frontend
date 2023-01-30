@@ -1,0 +1,31 @@
+.navigation__mobile-auth {
+    display: flex;
+    flex-direction: column;
+    row-gap: 28px;
+    justify-content: center;
+    align-items: center;
+}
+
+.navigation__reg, .navigation__auth {
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+
+.navigation__reg:hover, .navigation__auth:hover {
+    opacity: .7;
+    cursor: pointer;
+}
+
+.navigation__auth {
+    background-color: #3DDC84;
+    color: black;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    line-height: 16px;
+    text-decoration: none;
+    padding: 8px 30px;
+}

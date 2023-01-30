@@ -1,4 +1,4 @@
-.header__button {
+.navigation__button {
   font-size: 12px;
   line-height: 16px;
   text-decoration: none;
@@ -6,6 +6,6 @@
   padding: 8px 30px;
 }
 
-.header__button:hover {
+.navigation__button:hover {
   opacity: .8;
 }

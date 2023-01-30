@@ -8,4 +8,8 @@
   .navigation__mobile {
     display: block;
   }
+
+  .navigation__buttons_mobile {
+    display: none;
+  }
 }

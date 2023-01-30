@@ -20,3 +20,6 @@
 @import url(./__account-vidget/navigation__account-vidget.css);
 @import url(./__account-vidget/_mobile/navigation__account-vidget_mobile.css);
 @import url(./__list-links/navigation__list-links.css);
+@import url(./__button/navigation__button.css);
+@import url(./__button-login/navigation__button-login.css);
+@import url(./__mobile-auth/navigation__mobile-auth.css);

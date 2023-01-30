@@ -1,7 +1,3 @@
-.navigation__account-vidget_mobile {
-
-}
-
 @media screen and (max-width: 900px) {
   .navigation__account-vidget_mobile {
     display: none;

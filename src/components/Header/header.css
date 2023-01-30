@@ -22,9 +22,6 @@
 
 @import url(./__logo/header__logo.css);
 @import url(./__logo-link/header__logo-link.css);
-@import url(./__button/header__button.css);
-@import url(./__button-reg/header__button-reg.css);
-@import url(./__button-login/header__button-login.css);
 @import url(./__account-icon/header__account-icon.css);
 @import url(./__account-name/header__account-name.css);
 @import url(./__account-vidget/header__account-vidget.css);
